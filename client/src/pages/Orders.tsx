@@ -125,7 +125,7 @@ export default function Orders() {
                         Order #{order.id}
                       </CardTitle>
                       <p className="text-sm text-gray-600 dark:text-gray-400">
-                        Placed on {order.createdAt.toLocaleDateString('en-US', {
+                        Placed on {new Date(order.createdAt).toLocaleDateString('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
