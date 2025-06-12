@@ -9,21 +9,42 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '../hooks/useAuth';
 import { useFavorites } from '../hooks/useFavorites';
+import { useOrders } from '../hooks/useOrders';
 import { logOut } from '../lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'wouter';
 import productsData from '../data/products.json';
-import { Product } from '../types';
+import { Product, Order } from '../types';
+import { formatMoney } from '../utils/formatMoney';
+import { Badge } from '@/components/ui/badge';
 
 export default function Account() {
   const { user, isAuthenticated } = useAuth();
   const { favorites } = useFavorites();
+  const { orders } = useOrders();
   const { toast } = useToast();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   const products = productsData as Product[];
   const favoriteProducts = products.filter(p => favorites.includes(p.id));
+
+  const getStatusColor = (status: Order['status']) => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400';
+      case 'processing':
+        return 'bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400';
+      case 'shipped':
+        return 'bg-purple-100 text-purple-800 dark:bg-purple-900/20 dark:text-purple-400';
+      case 'delivered':
+        return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400';
+      case 'cancelled':
+        return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400';
+      default:
+        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
+    }
+  };
 
   const handleSignOut = async () => {
     try {
@@ -224,18 +245,78 @@ export default function Account() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-center py-12">
-                  <i className="fas fa-box text-6xl text-gray-400 mb-4" />
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    No orders yet
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-400 mb-6">
-                    Your order history will appear here after you make your first purchase.
-                  </p>
-                  <Link href="/products">
-                    <Button>Start Shopping</Button>
-                  </Link>
-                </div>
+                {orders.length === 0 ? (
+                  <div className="text-center py-12">
+                    <i className="fas fa-box text-6xl text-gray-400 mb-4" />
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                      No orders yet
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">
+                      Your order history will appear here after you make your first purchase.
+                    </p>
+                    <Link href="/products">
+                      <Button>Start Shopping</Button>
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {orders.map((order) => (
+                      <div key={order.id} className="bg-yellow-50 dark:bg-slate-800 rounded-lg p-6 border border-yellow-200 dark:border-slate-700">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                              Order #{order.id}
+                            </h3>
+                            <p className="text-sm text-gray-600 dark:text-gray-400">
+                              Placed on {order.createdAt.toLocaleDateString()} at {order.createdAt.toLocaleTimeString()}
+                            </p>
+                          </div>
+                          <div className="flex items-center space-x-4 mt-2 sm:mt-0">
+                            <Badge className={getStatusColor(order.status)}>
+                              {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                            </Badge>
+                            <div className="text-right">
+                              <p className="text-sm text-gray-600 dark:text-gray-400">Total</p>
+                              <p className="text-lg font-semibold text-gray-900 dark:text-white">
+                                {formatMoney(order.total)}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="border-t border-yellow-200 dark:border-slate-600 pt-4">
+                          <h4 className="font-medium text-gray-900 dark:text-white mb-3">
+                            Items ({order.items.length})
+                          </h4>
+                          <div className="space-y-3">
+                            {order.items.map((item) => (
+                              <div key={item.id} className="flex items-center space-x-4">
+                                <img 
+                                  src={item.image} 
+                                  alt={item.name}
+                                  className="w-16 h-16 object-cover rounded-lg bg-white"
+                                />
+                                <div className="flex-1">
+                                  <h5 className="font-medium text-gray-900 dark:text-white">
+                                    {item.name}
+                                  </h5>
+                                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                                    Quantity: {item.quantity} • {formatMoney(item.price)} each
+                                  </p>
+                                </div>
+                                <div className="text-right">
+                                  <p className="font-semibold text-gray-900 dark:text-white">
+                                    {formatMoney(item.total)}
+                                  </p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
