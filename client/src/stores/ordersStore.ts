@@ -31,9 +31,14 @@ export const useOrdersStore = create<OrdersState>()(
           updatedAt: new Date(),
         };
         
+        console.log('Adding order to store:', newOrder);
+        console.log('Current orders before adding:', get().orders);
+        
         set(state => ({
           orders: [...state.orders, newOrder]
         }));
+        
+        console.log('Current orders after adding:', get().orders);
         
         return newOrder;
       },

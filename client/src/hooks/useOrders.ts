@@ -21,10 +21,16 @@ export function useOrders() {
     if (!user) {
       throw new Error('User must be authenticated to place an order');
     }
-    return addOrder(items, total, shippingAddress, paymentMethod, user.uid);
+    console.log('Creating order for user:', user.uid);
+    const order = await addOrder(items, total, shippingAddress, paymentMethod, user.uid);
+    console.log('Order created:', order);
+    return order;
   };
 
   const userOrders = user ? getUserOrders(user.uid) : [];
+  console.log('User ID:', user?.uid);
+  console.log('User orders:', userOrders);
+  console.log('All orders:', orders);
 
   return {
     orders: userOrders,
