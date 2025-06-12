@@ -17,19 +17,19 @@ export default function Cart() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen bg-yellow-50 dark:bg-slate-900">
         <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <i className="fas fa-shopping-cart text-8xl text-gray-400 mb-6" />
-            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            <i className="fas fa-shopping-cart text-8xl text-yellow-400 mb-6" />
+            <h1 className="text-4xl font-bold text-blue-900 dark:text-white mb-4">
               Your cart is empty
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">
+            <p className="text-xl text-blue-800 dark:text-gray-400 mb-8">
               Add some Springfield magic to your cart!
             </p>
             <Link href="/products">
-              <Button className="bg-blue-900 hover:bg-blue-800 text-white px-8 py-4 text-lg">
+              <Button className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-8 py-4 text-lg font-bold border-2 border-blue-900">
                 <i className="fas fa-toys mr-2" />
                 Start Shopping
               </Button>
@@ -42,7 +42,7 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-yellow-50 dark:bg-slate-900">
       <Navbar />
 
       {/* Page Header */}

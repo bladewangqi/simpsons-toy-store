@@ -53,7 +53,7 @@ export default function Orders() {
 
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen bg-yellow-50 dark:bg-slate-900">
         <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="max-w-md mx-auto text-center">
@@ -82,7 +82,7 @@ export default function Orders() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-yellow-50 dark:bg-slate-900">
       <Navbar />
 
       {/* Page Header */}
