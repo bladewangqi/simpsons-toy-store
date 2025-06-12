@@ -11,6 +11,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Account from "./pages/Account";
 import Orders from "./pages/Orders";
+import Favorites from "./pages/Favorites";
 
 function Router() {
   return (
@@ -21,6 +22,7 @@ function Router() {
       <Route path="/cart" component={Cart} />
       <Route path="/account" component={Account} />
       <Route path="/orders" component={Orders} />
+      <Route path="/favorites" component={Favorites} />
       <Route component={NotFound} />
     </Switch>
   );
