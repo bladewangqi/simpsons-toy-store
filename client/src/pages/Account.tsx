@@ -268,7 +268,7 @@ export default function Account() {
                               Order #{order.id}
                             </h3>
                             <p className="text-sm text-gray-600 dark:text-gray-400">
-                              Placed on {order.createdAt.toLocaleDateString()} at {order.createdAt.toLocaleTimeString()}
+                              Placed on {new Date(order.createdAt).toLocaleDateString()} at {new Date(order.createdAt).toLocaleTimeString()}
                             </p>
                           </div>
                           <div className="flex items-center space-x-4 mt-2 sm:mt-0">
