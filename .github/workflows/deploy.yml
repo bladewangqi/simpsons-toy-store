@@ -24,7 +24,7 @@ jobs:
       run: npm ci
 
     - name: Build
-      run: npm run build:static
+      run: npm run build
       env:
         VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
         VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
