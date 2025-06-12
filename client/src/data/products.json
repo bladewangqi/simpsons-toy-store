@@ -1,0 +1,339 @@
+[
+  {
+    "id": "bart-plush-001",
+    "name": "Bart Simpson 12\" Premium Plush",
+    "price": 24.99,
+    "originalPrice": 31.24,
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "images": [
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"
+    ],
+    "category": "plush",
+    "description": "Soft, huggable Bart with authentic details and slingshot accessory. Perfect for collectors and kids alike.",
+    "features": [
+      "12-inch premium soft plush",
+      "Authentic character details",
+      "Includes slingshot accessory",
+      "Machine washable",
+      "Suitable for ages 3+"
+    ],
+    "rating": 4.5,
+    "reviewCount": 127,
+    "inStock": true,
+    "isBestSeller": true,
+    "discount": 20
+  },
+  {
+    "id": "homer-figure-002",
+    "name": "Homer Simpson Deluxe Figure with Donuts",
+    "price": 34.99,
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Detailed Homer figure with removable Duff beer and assorted donut accessories. Articulated joints for posing.",
+    "features": [
+      "6-inch detailed action figure",
+      "Includes Duff beer accessory",
+      "Assorted donut pieces",
+      "Articulated joints",
+      "Display stand included"
+    ],
+    "rating": 5.0,
+    "reviewCount": 89,
+    "inStock": true,
+    "isNew": true
+  },
+  {
+    "id": "lisa-sax-003",
+    "name": "Lisa Simpson with Saxophone",
+    "price": 49.99,
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "collectibles",
+    "description": "Premium collectible featuring Lisa with her beloved saxophone. Hand-painted details and display stand included.",
+    "features": [
+      "Hand-painted details",
+      "Removable saxophone",
+      "Display stand included",
+      "Limited edition numbering",
+      "Certificate of authenticity"
+    ],
+    "rating": 4.2,
+    "reviewCount": 45,
+    "inStock": true,
+    "isLimitedEdition": true
+  },
+  {
+    "id": "marge-plush-004",
+    "name": "Marge Simpson 14\" Plush with Blue Hair",
+    "price": 28.99,
+    "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "plush",
+    "description": "Iconic Marge with her signature towering blue hair. Extra soft materials and pearl necklace detail.",
+    "features": [
+      "14-inch premium plush",
+      "Signature blue hair styling",
+      "Pearl necklace detail",
+      "Extra soft materials",
+      "Machine washable"
+    ],
+    "rating": 4.7,
+    "reviewCount": 156,
+    "inStock": true
+  },
+  {
+    "id": "maggie-figure-005",
+    "name": "Maggie Simpson with Pacifier",
+    "price": 19.99,
+    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Adorable baby Maggie figure with removable pacifier and starfish hair. Perfect size for desk display.",
+    "features": [
+      "4-inch figure",
+      "Removable pacifier",
+      "Starfish hair detail",
+      "Desk display base",
+      "Authentic baby styling"
+    ],
+    "rating": 4.9,
+    "reviewCount": 203,
+    "inStock": true
+  },
+  {
+    "id": "krusty-figure-006",
+    "name": "Krusty the Clown Deluxe Figure",
+    "price": 39.99,
+    "image": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Hey kids! Detailed Krusty figure with microphone accessory and his signature big shoes. Highly articulated.",
+    "features": [
+      "7-inch detailed figure",
+      "Microphone accessory",
+      "Signature big shoes",
+      "Highly articulated",
+      "Show stage base"
+    ],
+    "rating": 4.3,
+    "reviewCount": 98,
+    "inStock": true
+  },
+  {
+    "id": "lego-school-007",
+    "name": "Springfield Elementary School LEGO Set",
+    "price": 199.99,
+    "image": "https://pixabay.com/get/gd788fc58c4b748adedd000fe2cc71659bc3462553ada8b9a0cee463832e102d53e40451f26b49cb325b1545a8a789d6d5657c3b3adceff6a54367ebeda6f3e59_1280.jpg",
+    "category": "lego",
+    "description": "Build Bart and Lisa's school! Includes 8 minifigures, school bus, and detailed classrooms. 2,100 pieces.",
+    "features": [
+      "2,100 LEGO pieces",
+      "8 Simpsons minifigures",
+      "School bus included",
+      "Detailed classrooms",
+      "Principal Skinner's office"
+    ],
+    "rating": 4.8,
+    "reviewCount": 342,
+    "inStock": true
+  },
+  {
+    "id": "duff-collectible-008",
+    "name": "Duff Beer Promotional Can Set",
+    "price": 44.99,
+    "image": "https://images.unsplash.com/photo-1615996001375-c7ef13294436?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "collectibles",
+    "description": "Official Duff Beer collectible can set. Three vintage designs from the show. Empty decorative cans only.",
+    "features": [
+      "Set of 3 decorative cans",
+      "Vintage show designs",
+      "Display stand included",
+      "Official licensing",
+      "Collector's item"
+    ],
+    "rating": 4.1,
+    "reviewCount": 76,
+    "inStock": true
+  },
+  {
+    "id": "ned-flanders-009",
+    "name": "Ned Flanders with Mustache Comb",
+    "price": 22.99,
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Okily dokily! Ned Flanders figure with his signature sweater and mustache grooming kit.",
+    "features": [
+      "5-inch figure",
+      "Signature green sweater",
+      "Mustache comb accessory",
+      "Glasses detail",
+      "Stand included"
+    ],
+    "rating": 4.4,
+    "reviewCount": 67,
+    "inStock": true
+  },
+  {
+    "id": "apu-store-010",
+    "name": "Apu's Kwik-E-Mart Playset",
+    "price": 79.99,
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "collectibles",
+    "description": "Complete Kwik-E-Mart store with Apu figure, cash register, and Squishee machine.",
+    "features": [
+      "Detailed store playset",
+      "Apu figure included",
+      "Working cash register",
+      "Squishee machine",
+      "Store products included"
+    ],
+    "rating": 4.6,
+    "reviewCount": 134,
+    "inStock": true
+  },
+  {
+    "id": "chief-wiggum-011",
+    "name": "Chief Wiggum Police Car Set",
+    "price": 54.99,
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Chief Wiggum figure with his police car, donut accessories, and Lou figure.",
+    "features": [
+      "Chief Wiggum figure",
+      "Police car vehicle",
+      "Lou figure included",
+      "Donut accessories",
+      "Working doors"
+    ],
+    "rating": 4.3,
+    "reviewCount": 89,
+    "inStock": true
+  },
+  {
+    "id": "itchy-scratchy-012",
+    "name": "Itchy & Scratchy Show Figures",
+    "price": 32.99,
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "The violent cat and mouse duo from Bart and Lisa's favorite cartoon show.",
+    "features": [
+      "Both Itchy and Scratchy",
+      "Cartoon styling",
+      "Various accessories",
+      "Display base",
+      "Poseable figures"
+    ],
+    "rating": 4.5,
+    "reviewCount": 112,
+    "inStock": true
+  },
+  {
+    "id": "moe-tavern-013",
+    "name": "Moe's Tavern Playset",
+    "price": 89.99,
+    "image": "https://images.unsplash.com/photo-1615996001375-c7ef13294436?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "collectibles",
+    "description": "Where everybody knows your name! Complete tavern with Moe figure and bar accessories.",
+    "features": [
+      "Detailed tavern interior",
+      "Moe Szyslak figure",
+      "Bar accessories",
+      "Phone booth",
+      "Duff beer taps"
+    ],
+    "rating": 4.7,
+    "reviewCount": 98,
+    "inStock": true
+  },
+  {
+    "id": "lard-lad-014",
+    "name": "Lard Lad Donut Man Figure",
+    "price": 26.99,
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Giant Lard Lad donut mascot from the memorable Treehouse of Horror episode.",
+    "features": [
+      "8-inch tall figure",
+      "Donut accessory",
+      "Episode accurate design",
+      "Moveable arms",
+      "Display base"
+    ],
+    "rating": 4.2,
+    "reviewCount": 73,
+    "inStock": true
+  },
+  {
+    "id": "simpsons-house-015",
+    "name": "The Simpsons House LEGO Set",
+    "price": 249.99,
+    "image": "https://pixabay.com/get/gd788fc58c4b748adedd000fe2cc71659bc3462553ada8b9a0cee463832e102d53e40451f26b49cb325b1545a8a789d6d5657c3b3adceff6a54367ebeda6f3e59_1280.jpg",
+    "category": "lego",
+    "description": "Build the iconic Simpsons family home at 742 Evergreen Terrace with all family members included.",
+    "features": [
+      "2,523 LEGO pieces",
+      "All 5 family members",
+      "Detailed interior rooms",
+      "Garage and car",
+      "Removable roof sections"
+    ],
+    "rating": 4.9,
+    "reviewCount": 567,
+    "inStock": true,
+    "isBestSeller": true
+  },
+  {
+    "id": "ralph-wiggum-016",
+    "name": "Ralph Wiggum \"I'm Special\" Figure",
+    "price": 18.99,
+    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Me fail English? That's unpossible! Ralph in his classic pose with crayons.",
+    "features": [
+      "4-inch Ralph figure",
+      "Crayon accessories",
+      "Classic expression",
+      "School desk base",
+      "Quote bubble included"
+    ],
+    "rating": 4.6,
+    "reviewCount": 145,
+    "inStock": true
+  },
+  {
+    "id": "groundskeeper-willie-017",
+    "name": "Groundskeeper Willie with Rake",
+    "price": 29.99,
+    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "figures",
+    "description": "Ach! Willie with his groundskeeping tools and Scottish accent phrases.",
+    "features": [
+      "6-inch Willie figure",
+      "Rake and shovel tools",
+      "Removable hat",
+      "Sound chip with phrases",
+      "Groundskeeper shack"
+    ],
+    "rating": 4.4,
+    "reviewCount": 78,
+    "inStock": true
+  },
+  {
+    "id": "family-plush-set-018",
+    "name": "Complete Simpson Family Plush Set",
+    "price": 99.99,
+    "originalPrice": 129.99,
+    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "category": "plush",
+    "description": "Get the whole family! All five Simpson family members in premium plush form.",
+    "features": [
+      "All 5 family members",
+      "Consistent 10-inch size",
+      "Premium soft materials",
+      "Individual packaging",
+      "Family photo included"
+    ],
+    "rating": 4.8,
+    "reviewCount": 234,
+    "inStock": true,
+    "isBestSeller": true,
+    "discount": 23
+  }
+]

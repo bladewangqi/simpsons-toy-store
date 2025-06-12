@@ -1,0 +1,44 @@
+[
+  {
+    "id": "all",
+    "name": "All Products",
+    "slug": "all",
+    "icon": "fas fa-star",
+    "description": "All Simpsons merchandise"
+  },
+  {
+    "id": "plush",
+    "name": "Plush Toys",
+    "slug": "plush",
+    "icon": "fas fa-heart",
+    "description": "Soft and cuddly Simpsons plush toys"
+  },
+  {
+    "id": "figures",
+    "name": "Action Figures",
+    "slug": "figures",
+    "icon": "fas fa-user",
+    "description": "Detailed action figures and collectibles"
+  },
+  {
+    "id": "collectibles",
+    "name": "Collectibles",
+    "slug": "collectibles",
+    "icon": "fas fa-gem",
+    "description": "Premium collectible items"
+  },
+  {
+    "id": "lego",
+    "name": "LEGO Sets",
+    "slug": "lego",
+    "icon": "fas fa-cubes",
+    "description": "Official LEGO Simpsons building sets"
+  },
+  {
+    "id": "accessories",
+    "name": "Accessories",
+    "slug": "accessories",
+    "icon": "fas fa-star",
+    "description": "Simpsons themed accessories"
+  }
+]
