@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -16,6 +16,12 @@ export default function Orders() {
   const { user, isAuthenticated } = useAuth();
   const { orders } = useOrders();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  // Force component re-render when user changes or when navigating to this page
+  useEffect(() => {
+    setRefreshKey(prev => prev + 1);
+  }, [user?.uid]);
 
   const getStatusColor = (status: Order['status']) => {
     switch (status) {
