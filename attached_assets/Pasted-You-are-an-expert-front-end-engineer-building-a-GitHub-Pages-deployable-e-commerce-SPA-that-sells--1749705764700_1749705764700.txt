@@ -1,0 +1,98 @@
+You are an expert front-end engineer building a GitHub-Pages-deployable e-commerce SPA that sells **toys from *The Simpsons***.
+
+⚙️ Tech stack  
+• React + Vite + TypeScript, TailwindCSS for styling, React Router for routing.  
+• State & caching: TanStack Query + Zustand.  
+• Auth: **Firebase Authentication** (Google OAuth + email/password) – no custom backend.  
+• Data: `/src/data/products.json` (≈ 20 Simpsons-toy items); persist cart, favourites & “orders” in **localStorage**.  
+• Payments: **mock checkout** – show a “Payment Successful” modal after a 3 s fake network delay.  
+• Build: `vite build` → static assets in `dist/` (works on GitHub Pages).  
+• Deploy: add a `deploy.yml` GitHub Action that runs `npm ci && npm run build && peaceiris/actions-gh-pages` to push `dist` to the `gh-pages` branch.
+
+📁 Repository layout  
+/src
+/components (Navbar, ProductCard, SearchBar, CartDrawer, FavouriteButton …)
+/pages (Home, ProductList, ProductDetail, Cart, Checkout, Account, Orders)
+/data (products.json, categories.json)
+/hooks (useAuth, useCart, useFavourites)
+/utils (formatMoney, storage.ts)
+public/
+/images (Simpsons-toy photos: bart-plush.jpg, homer-funko.jpg, lisa-lego.jpg …)
+tests/ (Jest + React-Testing-Library)
+/scripts (deploy-to-gh-pages.sh) # optional helper
+README.md
+firebase.json (hosting config for local emulate)
+.env.example (VITE_FIREBASE_API_KEY etc.)
+
+
+🖼️ **Product images & seed data**  
+1. Place at least **10 JPEG/PNG images** of licensed Simpsons toys in `public/images/`.  
+   • Use open-license or manufacturer promo shots (e.g. from Wikimedia Commons or official product pages).  
+   • File-name them clearly (`bart-figure.jpg`, `duff-beer-plush.png`, etc.).  
+2. In `/src/data/products.json`, create 15-20 objects like:  
+
+```json
+{
+  "id": "bart-plush-001",
+  "name": "Bart Simpson 12'' Plush",
+  "price": 24.99,
+  "image": "/images/bart-plush.jpg",
+  "category": "Plush",
+  "description": "Soft, huggable Bart with slingshot-in-back-pocket detail."
+}
+Include at least one product for each core family member plus Krusty, Itchy & Scratchy, an Lard Lad mini-figure, etc.
+
+🔐 Authentication flow
+
+Firebase Web SDK (initializeApp).
+
+Login.tsx → sign-in with Google or email/password.
+
+Store Firebase user object in Zustand; protect routes with <PrivateRoute>.
+
+🛍️ Core features
+
+Product list: infinite scroll, category filter, price sort, fuzzy search (Fuse.js).
+
+Product detail: carousel (show off multiple angles), add-to-cart, add-to-favourites.
+
+Cart drawer: subtotal, qty adjust, remove, persists in localStorage.
+
+Checkout page: shipping form → “Pay Now” button → fake 3 s await → success modal → write order object to orders store.
+
+Orders page: paginated list of mock orders (from localStorage).
+
+Search endpoint replacement: client-side filter over products.json.
+
+📜 Acceptance criteria
+
+npm run dev hot-reloads at http://localhost:5173.
+
+npm run build outputs a 100 % static bundle ready for GitHub Pages.
+
+Cart, favourites and orders survive full page reloads.
+
+Simpsons-toy images render correctly from /images/*.
+
+Unauthenticated users redirected to /login when hitting protected pages.
+
+Lighthouse scores ≥ 90 for PWA, Performance & Accessibility.
+
+💎 Nice-to-haves
+
+Service Worker via vite-plugin-pwa for offline product browsing.
+
+Skeleton loaders with @tanstack/react-skeleton.
+
+Dark-mode toggle (Tailwind dark: classes).
+
+Unit tests for utils and hooks; component tests for Cart & Checkout pages.
+
+🔄 Commit convention
+
+Use conventional commits (feat: cart drawer, chore: seed Simpsons products, ci: gh-pages deploy).
+
+Document trade-offs in inline comments and README’s “Future work” section (adding real backend, Stripe, reviews, admin dashboard).
+
+Generate the complete codebase now – every file ready for git init, push, and one-click deployment to GitHub Pages.
+
