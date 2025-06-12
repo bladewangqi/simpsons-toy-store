@@ -47,18 +47,18 @@ export function Navbar() {
               {/* Dark Mode Toggle */}
               <button 
                 onClick={toggleTheme}
-                className="p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400"
+                className="p-2 rounded-lg hover:bg-yellow-100 dark:hover:bg-blue-800 transition-colors border-2 border-blue-900 dark:border-yellow-400"
               >
                 {theme === 'dark' ? (
-                  <i className="fas fa-sun text-yellow-400" />
+                  <i className="fas fa-sun text-yellow-400 hover:text-yellow-500" />
                 ) : (
-                  <i className="fas fa-moon text-blue-900" />
+                  <i className="fas fa-moon text-blue-900 hover:text-blue-800" />
                 )}
               </button>
 
               {/* Favorites */}
-              <Link href="/favorites" className="relative p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400">
-                <i className="fas fa-heart text-blue-900 dark:text-yellow-400" />
+              <Link href="/favorites" className="relative p-2 rounded-lg hover:bg-yellow-100 dark:hover:bg-blue-800 transition-colors border-2 border-blue-900 dark:border-yellow-400">
+                <i className="fas fa-heart text-blue-900 dark:text-yellow-400 hover:text-blue-800 dark:hover:text-yellow-500" />
                 {favoriteCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center border border-white">
                     {favoriteCount}
@@ -69,9 +69,9 @@ export function Navbar() {
               {/* Cart */}
               <button 
                 onClick={toggleOpen}
-                className="relative p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400"
+                className="relative p-2 rounded-lg hover:bg-yellow-100 dark:hover:bg-blue-800 transition-colors border-2 border-blue-900 dark:border-yellow-400"
               >
-                <i className="fas fa-shopping-cart text-blue-900 dark:text-yellow-400" />
+                <i className="fas fa-shopping-cart text-blue-900 dark:text-yellow-400 hover:text-blue-800 dark:hover:text-yellow-500" />
                 {itemCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center border border-white">
                     {itemCount}

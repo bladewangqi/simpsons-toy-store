@@ -4,8 +4,11 @@
     "name": "Bart Simpson 12\" Premium Plush",
     "price": 24.99,
     "originalPrice": 31.24,
-    "image": "https://i.imgbox.com/yYC0Ibku.png",
-    "images": ["https://i.imgbox.com/yYC0Ibku.png", "https://i.imgbox.com/6ySNWxxe.png"],
+    "image": "https://images2.imgbox.com/25/9f/yYC0Ibku_o.png",
+    "images": [
+      "https://images2.imgbox.com/25/9f/yYC0Ibku_o.png",
+      "https://images2.imgbox.com/3b/6f/6ySNWxxe_o.png"
+    ],
     "category": "plush",
     "description": "Soft, huggable Bart with authentic details and slingshot accessory. Perfect for collectors and kids alike.",
     "features": [
@@ -25,7 +28,7 @@
     "id": "homer-figure-002",
     "name": "Homer Simpson Deluxe Figure with Donuts",
     "price": 34.99,
-    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/4b/1a/yQTczywC_o.png",
     "category": "figures",
     "description": "Detailed Homer figure with removable Duff beer and assorted donut accessories. Articulated joints for posing.",
     "features": [
@@ -44,7 +47,7 @@
     "id": "lisa-sax-003",
     "name": "Lisa Simpson with Saxophone",
     "price": 49.99,
-    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/fb/76/jsMMjL0A_o.png",
     "category": "collectibles",
     "description": "Premium collectible featuring Lisa with her beloved saxophone. Hand-painted details and display stand included.",
     "features": [
@@ -63,7 +66,7 @@
     "id": "marge-plush-004",
     "name": "Marge Simpson 14\" Plush with Blue Hair",
     "price": 28.99,
-    "image": "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/ba/d5/9C5PUQeP_o.png",
     "category": "plush",
     "description": "Iconic Marge with her signature towering blue hair. Extra soft materials and pearl necklace detail.",
     "features": [
@@ -81,7 +84,7 @@
     "id": "maggie-figure-005",
     "name": "Maggie Simpson with Pacifier",
     "price": 19.99,
-    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/f1/0b/CCHVyNeV_o.png",
     "category": "figures",
     "description": "Adorable baby Maggie figure with removable pacifier and starfish hair. Perfect size for desk display.",
     "features": [
@@ -99,7 +102,7 @@
     "id": "krusty-figure-006",
     "name": "Krusty the Clown Deluxe Figure",
     "price": 39.99,
-    "image": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/c0/26/nEXWVbnj_o.png",
     "category": "figures",
     "description": "Hey kids! Detailed Krusty figure with microphone accessory and his signature big shoes. Highly articulated.",
     "features": [
@@ -117,7 +120,7 @@
     "id": "lego-school-007",
     "name": "Springfield Elementary School LEGO Set",
     "price": 199.99,
-    "image": "https://pixabay.com/get/gd788fc58c4b748adedd000fe2cc71659bc3462553ada8b9a0cee463832e102d53e40451f26b49cb325b1545a8a789d6d5657c3b3adceff6a54367ebeda6f3e59_1280.jpg",
+    "image": "https://images2.imgbox.com/41/fb/1PTFGlQC_o.png",
     "category": "lego",
     "description": "Build Bart and Lisa's school! Includes 8 minifigures, school bus, and detailed classrooms. 2,100 pieces.",
     "features": [
@@ -135,7 +138,7 @@
     "id": "duff-collectible-008",
     "name": "Duff Beer Promotional Can Set",
     "price": 44.99,
-    "image": "https://images.unsplash.com/photo-1615996001375-c7ef13294436?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/0f/9d/ZnFRlo3S_o.png",
     "category": "collectibles",
     "description": "Official Duff Beer collectible can set. Three vintage designs from the show. Empty decorative cans only.",
     "features": [
@@ -153,7 +156,7 @@
     "id": "ned-flanders-009",
     "name": "Ned Flanders with Mustache Comb",
     "price": 22.99,
-    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/e5/e0/PpQifXUZ_o.png",
     "category": "figures",
     "description": "Okily dokily! Ned Flanders figure with his signature sweater and mustache grooming kit.",
     "features": [
@@ -171,7 +174,7 @@
     "id": "apu-store-010",
     "name": "Apu's Kwik-E-Mart Playset",
     "price": 79.99,
-    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/1d/8a/VBElHqNX_o.png",
     "category": "collectibles",
     "description": "Complete Kwik-E-Mart store with Apu figure, cash register, and Squishee machine.",
     "features": [
@@ -189,7 +192,7 @@
     "id": "chief-wiggum-011",
     "name": "Chief Wiggum Police Car Set",
     "price": 54.99,
-    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/e5/b3/SH8GFdh4_o.png",
     "category": "figures",
     "description": "Chief Wiggum figure with his police car, donut accessories, and Lou figure.",
     "features": [
@@ -207,7 +210,7 @@
     "id": "itchy-scratchy-012",
     "name": "Itchy & Scratchy Show Figures",
     "price": 32.99,
-    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/9c/3d/ljlLfM2h_o.png",
     "category": "figures",
     "description": "The violent cat and mouse duo from Bart and Lisa's favorite cartoon show.",
     "features": [
@@ -225,7 +228,7 @@
     "id": "moe-tavern-013",
     "name": "Moe's Tavern Playset",
     "price": 89.99,
-    "image": "https://images.unsplash.com/photo-1615996001375-c7ef13294436?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/ff/e3/h3KFhrR6_o.png",
     "category": "collectibles",
     "description": "Where everybody knows your name! Complete tavern with Moe figure and bar accessories.",
     "features": [
@@ -243,7 +246,7 @@
     "id": "lard-lad-014",
     "name": "Lard Lad Donut Man Figure",
     "price": 26.99,
-    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/ee/ab/RUZHDd3T_o.png",
     "category": "figures",
     "description": "Giant Lard Lad donut mascot from the memorable Treehouse of Horror episode.",
     "features": [
@@ -261,7 +264,7 @@
     "id": "simpsons-house-015",
     "name": "The Simpsons House LEGO Set",
     "price": 249.99,
-    "image": "https://pixabay.com/get/gd788fc58c4b748adedd000fe2cc71659bc3462553ada8b9a0cee463832e102d53e40451f26b49cb325b1545a8a789d6d5657c3b3adceff6a54367ebeda6f3e59_1280.jpg",
+    "image": "https://images2.imgbox.com/99/1f/ANd5XJ7I_o.png",
     "category": "lego",
     "description": "Build the iconic Simpsons family home at 742 Evergreen Terrace with all family members included.",
     "features": [
@@ -280,7 +283,7 @@
     "id": "ralph-wiggum-016",
     "name": "Ralph Wiggum \"I'm Special\" Figure",
     "price": 18.99,
-    "image": "https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/13/0f/gGamU8WN_o.png",
     "category": "figures",
     "description": "Me fail English? That's unpossible! Ralph in his classic pose with crayons.",
     "features": [
@@ -298,7 +301,7 @@
     "id": "groundskeeper-willie-017",
     "name": "Groundskeeper Willie with Rake",
     "price": 29.99,
-    "image": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/74/50/U84IvJOQ_o.png",
     "category": "figures",
     "description": "Ach! Willie with his groundskeeping tools and Scottish accent phrases.",
     "features": [
@@ -317,7 +320,7 @@
     "name": "Complete Simpson Family Plush Set",
     "price": 99.99,
     "originalPrice": 129.99,
-    "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400",
+    "image": "https://images2.imgbox.com/92/4e/mMPTFG8N_o.png",
     "category": "plush",
     "description": "Get the whole family! All five Simpson family members in premium plush form.",
     "features": [
