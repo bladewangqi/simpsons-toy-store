@@ -82,7 +82,7 @@ export default function ProductList() {
   };
 
   const handleSortChange = (sortBy: string) => {
-    setFilters(prev => ({ ...prev, sortBy }));
+    setFilters(prev => ({ ...prev, sortBy: sortBy as FilterOptions['sortBy'] }));
     setCurrentPage(1);
   };
 
@@ -122,7 +122,7 @@ export default function ProductList() {
       <div className="bg-white dark:bg-slate-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            {filters.category === 'all' ? 'All Products' : filters.category.charAt(0).toUpperCase() + filters.category.slice(1)}
+            {!filters.category || filters.category === 'all' ? 'All Products' : (filters.category?.charAt(0).toUpperCase() + filters.category?.slice(1))}
           </h1>
           {filters.search && (
             <p className="mt-2 text-gray-600 dark:text-gray-400">
@@ -149,7 +149,7 @@ export default function ProductList() {
                   <SelectValue placeholder="All Prices" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All Prices</SelectItem>
+                  <SelectItem value="all">All Prices</SelectItem>
                   <SelectItem value="0-25">Under $25</SelectItem>
                   <SelectItem value="25-50">$25 - $50</SelectItem>
                   <SelectItem value="50-100">$50 - $100</SelectItem>
