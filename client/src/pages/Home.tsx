@@ -28,29 +28,29 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-yellow-50 dark:bg-slate-900">
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-yellow-400 via-yellow-400 to-orange-500 py-16 lg:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-blue-900/20 to-transparent"></div>
+      <section className="relative bg-gradient-to-br from-sky-400 via-sky-300 to-blue-400 py-16 lg:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-white/10"></div>
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-yellow-400/30 to-transparent"></div>
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="text-center lg:text-left">
-              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg">
+              <h1 className="text-4xl lg:text-6xl font-bold text-yellow-400 mb-6 drop-shadow-lg stroke-2 stroke-blue-900" style={{textShadow: '3px 3px 0px #1e3a8a, -1px -1px 0px #1e3a8a, 1px -1px 0px #1e3a8a, -1px 1px 0px #1e3a8a, 1px 1px 0px #1e3a8a'}}>
                 D'oh! Amazing
-                <span className="block text-blue-900">Simpsons Toys</span>
+                <span className="block text-yellow-400">Simpsons Toys</span>
               </h1>
-              <p className="text-xl text-white/90 mb-8 drop-shadow">
+              <p className="text-xl text-blue-900 font-semibold mb-8 drop-shadow bg-white/80 rounded-lg p-4">
                 Premium collectibles, plush toys, and action figures from Springfield's finest family. 
                 Don't have a cow, man – shop now!
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button
                   onClick={scrollToProducts}
-                  className="bg-blue-900 hover:bg-blue-800 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                  className="bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-8 py-4 text-lg font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2 border-blue-900"
                 >
                   <i className="fas fa-toys mr-2" />
                   Shop Collection
@@ -58,7 +58,7 @@ export default function Home() {
                 <Link href="/products?new=true">
                   <Button
                     variant="outline"
-                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white border-2 border-white/30 px-8 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
+                    className="bg-orange-500 hover:bg-orange-600 text-white border-2 border-blue-900 px-8 py-4 text-lg font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300"
                   >
                     <i className="fas fa-sparkles mr-2" />
                     New Arrivals
@@ -69,19 +69,19 @@ export default function Home() {
             
             <div className="relative">
               <div className="relative mx-auto max-w-md">
-                <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl">
+                <div className="bg-yellow-400/20 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border-4 border-yellow-400">
                   <img
                     src={featuredProducts[0]?.image || "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=400"}
                     alt="Featured Product"
-                    className="w-full h-80 object-cover rounded-2xl shadow-lg"
+                    className="w-full h-80 object-cover rounded-2xl shadow-lg border-2 border-blue-900"
                   />
                 </div>
                 
-                <div className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse">
+                <div className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse border-2 border-blue-900">
                   <i className="fas fa-fire mr-1" />
                   Hot Item!
                 </div>
-                <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold shadow-lg border-2 border-blue-900">
                   <i className="fas fa-truck mr-1" />
                   Free Shipping
                 </div>

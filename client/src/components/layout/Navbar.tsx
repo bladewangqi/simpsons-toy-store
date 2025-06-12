@@ -23,17 +23,17 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="bg-white dark:bg-slate-800 shadow-lg sticky top-0 z-40 transition-colors duration-300">
+      <nav className="bg-yellow-400 dark:bg-blue-900 shadow-lg sticky top-0 z-40 transition-colors duration-300 border-b-4 border-blue-900 dark:border-yellow-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center">
-                <span className="text-2xl font-bold text-blue-900">S</span>
+              <div className="w-10 h-10 bg-blue-900 dark:bg-yellow-400 rounded-full flex items-center justify-center border-2 border-white">
+                <span className="text-2xl font-bold text-yellow-400 dark:text-blue-900">S</span>
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Simpsons Toy Store</h1>
-                <p className="text-xs text-gray-500 dark:text-gray-400">Premium Collectibles</p>
+                <h1 className="text-xl font-bold text-blue-900 dark:text-yellow-400" style={{textShadow: '1px 1px 0px rgba(255,255,255,0.8)'}}>Simpsons Toy Store</h1>
+                <p className="text-xs text-blue-800 dark:text-yellow-300 font-semibold">Premium Collectibles</p>
               </div>
             </Link>
 
@@ -47,20 +47,20 @@ export function Navbar() {
               {/* Dark Mode Toggle */}
               <button 
                 onClick={toggleTheme}
-                className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                className="p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400"
               >
                 {theme === 'dark' ? (
-                  <i className="fas fa-sun text-yellow-500" />
+                  <i className="fas fa-sun text-yellow-400" />
                 ) : (
-                  <i className="fas fa-moon text-gray-600" />
+                  <i className="fas fa-moon text-blue-900" />
                 )}
               </button>
 
               {/* Favorites */}
-              <Link href="/favorites" className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
-                <i className="fas fa-heart text-gray-600 dark:text-gray-300" />
+              <Link href="/favorites" className="relative p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400">
+                <i className="fas fa-heart text-blue-900 dark:text-yellow-400" />
                 {favoriteCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center border border-white">
                     {favoriteCount}
                   </span>
                 )}
@@ -69,11 +69,11 @@ export function Navbar() {
               {/* Cart */}
               <button 
                 onClick={toggleOpen}
-                className="relative p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
+                className="relative p-2 rounded-lg hover:bg-blue-800 hover:text-yellow-400 dark:hover:bg-yellow-500 dark:hover:text-blue-900 transition-colors border-2 border-blue-900 dark:border-yellow-400"
               >
-                <i className="fas fa-shopping-cart text-gray-600 dark:text-gray-300" />
+                <i className="fas fa-shopping-cart text-blue-900 dark:text-yellow-400" />
                 {itemCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center border border-white">
                     {itemCount}
                   </span>
                 )}

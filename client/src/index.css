@@ -3,55 +3,60 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(0, 0%, 100%);
-  --foreground: hsl(20, 14.3%, 4.1%);
-  --muted: hsl(60, 4.8%, 95.9%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(20, 14.3%, 4.1%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(20, 14.3%, 4.1%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(60, 4.8%, 95.9%);
-  --secondary-foreground: hsl(24, 9.8%, 10%);
-  --accent: hsl(60, 4.8%, 95.9%);
-  --accent-foreground: hsl(24, 9.8%, 10%);
+  --background: hsl(48, 100%, 95%);
+  --foreground: hsl(219, 79%, 15%);
+  --muted: hsl(48, 100%, 88%);
+  --muted-foreground: hsl(219, 40%, 35%);
+  --popover: hsl(48, 100%, 97%);
+  --popover-foreground: hsl(219, 79%, 15%);
+  --card: hsl(48, 100%, 97%);
+  --card-foreground: hsl(219, 79%, 15%);
+  --border: hsl(48, 60%, 80%);
+  --input: hsl(48, 60%, 85%);
+  --primary: hsl(48, 100%, 53%);
+  --primary-foreground: hsl(219, 79%, 15%);
+  --secondary: hsl(200, 100%, 85%);
+  --secondary-foreground: hsl(219, 79%, 15%);
+  --accent: hsl(24, 90%, 60%);
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(20, 14.3%, 4.1%);
-  --radius: 0.5rem;
+  --ring: hsl(48, 100%, 53%);
+  --radius: 0.75rem;
   
   /* Simpsons theme colors */
   --simpsons-yellow: hsl(48, 100%, 53%);
-  --simpsons-blue: hsl(219, 79%, 30%);
-  --simpsons-orange: hsl(24, 90%, 49%);
-  --simpsons-skin: hsl(45, 93%, 58%);
+  --simpsons-blue: hsl(200, 100%, 70%);
+  --simpsons-navy: hsl(219, 79%, 15%);
+  --simpsons-orange: hsl(24, 90%, 60%);
+  --simpsons-skin: hsl(45, 93%, 75%);
+  --simpsons-red: hsl(0, 85%, 55%);
+  --simpsons-green: hsl(120, 60%, 50%);
+  --simpsons-purple: hsl(280, 65%, 55%);
+  --simpsons-brown: hsl(30, 45%, 35%);
 }
 
 .dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(207, 90%, 54%);
-  --primary-foreground: hsl(211, 100%, 99%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
+  --background: hsl(219, 79%, 8%);
+  --foreground: hsl(48, 100%, 95%);
+  --muted: hsl(219, 50%, 15%);
+  --muted-foreground: hsl(48, 60%, 70%);
+  --popover: hsl(219, 79%, 10%);
+  --popover-foreground: hsl(48, 100%, 95%);
+  --card: hsl(219, 79%, 10%);
+  --card-foreground: hsl(48, 100%, 95%);
+  --border: hsl(219, 40%, 25%);
+  --input: hsl(219, 40%, 20%);
+  --primary: hsl(48, 100%, 53%);
+  --primary-foreground: hsl(219, 79%, 15%);
+  --secondary: hsl(200, 80%, 20%);
+  --secondary-foreground: hsl(48, 100%, 95%);
+  --accent: hsl(24, 90%, 60%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
   --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-  --radius: 0.5rem;
+  --ring: hsl(48, 100%, 53%);
+  --radius: 0.75rem;
 }
 
 @layer base {
@@ -82,12 +87,44 @@
     background-color: var(--simpsons-blue);
   }
   
+  .simpsons-navy {
+    color: var(--simpsons-navy);
+  }
+  
+  .bg-simpsons-navy {
+    background-color: var(--simpsons-navy);
+  }
+  
   .simpsons-orange {
     color: var(--simpsons-orange);
   }
   
   .bg-simpsons-orange {
     background-color: var(--simpsons-orange);
+  }
+  
+  .simpsons-red {
+    color: var(--simpsons-red);
+  }
+  
+  .bg-simpsons-red {
+    background-color: var(--simpsons-red);
+  }
+  
+  .simpsons-green {
+    color: var(--simpsons-green);
+  }
+  
+  .bg-simpsons-green {
+    background-color: var(--simpsons-green);
+  }
+  
+  .simpsons-skin {
+    color: var(--simpsons-skin);
+  }
+  
+  .bg-simpsons-skin {
+    background-color: var(--simpsons-skin);
   }
   
   .line-clamp-2 {
