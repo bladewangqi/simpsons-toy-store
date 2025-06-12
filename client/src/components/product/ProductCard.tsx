@@ -62,7 +62,7 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
   return (
     <>
       <Link href={`/product/${product.id}`}>
-        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer">
+        <div className="bg-yellow-50 dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer border-3 border-yellow-400 hover:border-blue-500">
           {/* Product Image */}
           <div className="relative overflow-hidden">
             <img
@@ -125,14 +125,14 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
           {/* Product Details */}
           <div className="p-6">
             <div className="mb-2">
-              <span className="text-xs text-orange-500 font-semibold uppercase tracking-wide">
+              <span className="text-xs text-orange-500 bg-orange-100 px-2 py-1 rounded-full font-semibold uppercase tracking-wide border border-orange-300">
                 {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
               </span>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 line-clamp-2">
+            <h3 className="text-lg font-bold text-blue-900 dark:text-white mb-2 line-clamp-2">
               {product.name}
             </h3>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">
+            <p className="text-sm text-blue-800 dark:text-gray-400 mb-4 line-clamp-2">
               {product.description}
             </p>
             
@@ -149,11 +149,11 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
             {/* Price and Actions */}
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                <span className="text-2xl font-bold text-blue-900 dark:text-white">
                   {formatMoney(product.price)}
                 </span>
                 {product.originalPrice && (
-                  <span className="text-lg text-gray-500 dark:text-gray-400 line-through">
+                  <span className="text-lg text-red-500 dark:text-gray-400 line-through">
                     {formatMoney(product.originalPrice)}
                   </span>
                 )}
@@ -162,10 +162,10 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
                 onClick={handleAddToCart}
                 disabled={!product.inStock}
                 className={cn(
-                  'px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300',
+                  'px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2',
                   product.inStock
-                    ? 'bg-blue-900 hover:bg-blue-800 text-white'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                    ? 'bg-yellow-400 hover:bg-yellow-500 text-blue-900 border-blue-900'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed border-gray-400'
                 )}
               >
                 <i className="fas fa-cart-plus mr-1" />

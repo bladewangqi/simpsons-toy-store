@@ -11,7 +11,7 @@ export function CategoryNavigation({ activeCategory, onCategoryChange }: Categor
   const categories = categoriesData as Category[];
 
   return (
-    <section className="bg-white dark:bg-slate-800 py-8 border-b border-gray-200 dark:border-gray-700">
+    <section className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-orange-400 dark:bg-slate-800 py-8 border-b-4 border-blue-900 dark:border-yellow-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-center gap-4">
           {categories.map((category) => (
@@ -19,10 +19,10 @@ export function CategoryNavigation({ activeCategory, onCategoryChange }: Categor
               key={category.id}
               onClick={() => onCategoryChange(category.id)}
               className={cn(
-                'px-6 py-3 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300',
+                'px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2',
                 activeCategory === category.id
-                  ? 'bg-yellow-400 text-blue-900'
-                  : 'bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-slate-600'
+                  ? 'bg-blue-900 text-yellow-400 border-yellow-400 scale-110'
+                  : 'bg-white text-blue-900 border-blue-900 hover:bg-yellow-100 hover:scale-105'
               )}
             >
               <i className={cn(category.icon, 'mr-2')} />

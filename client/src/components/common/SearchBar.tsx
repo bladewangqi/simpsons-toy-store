@@ -36,9 +36,9 @@ export function SearchBar({ onSearch, placeholder = "Search for Bart, Homer, Lis
           value={query}
           onChange={handleInputChange}
           placeholder={placeholder}
-          className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-transparent bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
+          className="w-full pl-10 pr-4 py-2 border-2 border-blue-900 dark:border-yellow-400 rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 bg-white dark:bg-slate-700 text-blue-900 dark:text-white placeholder-blue-600 dark:placeholder-gray-400 font-semibold"
         />
-        <i className="fas fa-search absolute left-3 top-3 text-gray-400" />
+        <i className="fas fa-search absolute left-3 top-3 text-blue-900 dark:text-yellow-400" />
       </div>
     </form>
   );
