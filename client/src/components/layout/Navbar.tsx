@@ -17,6 +17,12 @@ export function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
+  // Get current search value from URL
+  const getCurrentSearchValue = () => {
+    const url = new URL(window.location.href);
+    return url.searchParams.get('search') || '';
+  };
+
   const handleSearch = (query: string) => {
     setLocation(`/products?search=${encodeURIComponent(query)}`);
   };
@@ -39,7 +45,7 @@ export function Navbar() {
 
             {/* Search Bar */}
             <div className="hidden md:flex flex-1 max-w-lg mx-8">
-              <SearchBar onSearch={handleSearch} className="w-full" />
+              <SearchBar onSearch={handleSearch} className="w-full" value={getCurrentSearchValue()} />
             </div>
 
             {/* Navigation Actions */}
@@ -139,7 +145,7 @@ export function Navbar() {
 
         {/* Mobile Search */}
         <div className="md:hidden px-4 pb-4">
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar onSearch={handleSearch} value={getCurrentSearchValue()} />
         </div>
       </nav>
 

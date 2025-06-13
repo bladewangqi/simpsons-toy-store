@@ -1,14 +1,20 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { debounce } from '@/lib/utils';
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
   placeholder?: string;
   className?: string;
+  value?: string;
 }
 
-export function SearchBar({ onSearch, placeholder = "Search for Bart, Homer, Lisa toys...", className }: SearchBarProps) {
-  const [query, setQuery] = useState('');
+export function SearchBar({ onSearch, placeholder = "Search for Bart, Homer, Lisa toys...", className, value = '' }: SearchBarProps) {
+  const [query, setQuery] = useState(value);
+
+  // Sync internal state with external value
+  useEffect(() => {
+    setQuery(value);
+  }, [value]);
 
   const debouncedSearch = useCallback(
     debounce((searchQuery: string) => {

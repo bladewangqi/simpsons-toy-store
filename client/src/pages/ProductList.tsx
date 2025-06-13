@@ -28,11 +28,18 @@ export default function ProductList() {
 
   // Parse URL parameters
   useEffect(() => {
-    const params = new URLSearchParams(location.split('?')[1] || '');
-    setFilters(prev => ({
-      ...prev,
+    // More robust URL parameter parsing
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    
+    const newFilters = {
       category: params.get('category') || 'all',
       search: params.get('search') || '',
+    };
+    
+    setFilters(prev => ({
+      ...prev,
+      ...newFilters
     }));
   }, [location]);
 
