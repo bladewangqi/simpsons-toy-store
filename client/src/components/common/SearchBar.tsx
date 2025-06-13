@@ -16,12 +16,22 @@ export function SearchBar({ onSearch, placeholder = "Search for Bart, Homer, Lis
     setQuery(value);
   }, [value]);
 
+  // Create a fresh debounced function that doesn't hold stale closures
   const debouncedSearch = useCallback(
     debounce((searchQuery: string) => {
       onSearch(searchQuery);
     }, 300),
     [onSearch]
   );
+
+  // Clean up debounced function when component unmounts or dependencies change
+  useEffect(() => {
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
+
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = e.target.value;
@@ -31,6 +41,8 @@ export function SearchBar({ onSearch, placeholder = "Search for Bart, Homer, Lis
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Cancel any pending debounced search and execute immediately
+    debouncedSearch.cancel();
     onSearch(query);
   };
 

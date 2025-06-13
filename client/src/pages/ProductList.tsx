@@ -41,6 +41,9 @@ export default function ProductList() {
       ...prev,
       ...newFilters
     }));
+    
+    // Reset to first page when URL changes (search/category change)
+    setCurrentPage(1);
   }, [location]);
 
   // Apply filters and sorting

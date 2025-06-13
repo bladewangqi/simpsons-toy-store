@@ -4,12 +4,12 @@ import { useCart } from '../../hooks/useCart';
 import { useFavorites } from '../../hooks/useFavorites';
 import { useTheme } from '../common/ThemeProvider';
 import { SearchBar } from '../common/SearchBar';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { AuthModal } from '../auth/AuthModal';
 import { CartDrawer } from '../cart/CartDrawer';
 
 export function Navbar() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const { user, isAuthenticated } = useAuth();
   const { itemCount, toggleOpen } = useCart();
   const { favoriteCount } = useFavorites();
@@ -17,14 +17,18 @@ export function Navbar() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
-  // Get current search value from URL
-  const getCurrentSearchValue = () => {
+  // Get current search value from URL - reactive to location changes
+  const currentSearchValue = useMemo(() => {
     const url = new URL(window.location.href);
     return url.searchParams.get('search') || '';
-  };
+  }, [location]);
 
   const handleSearch = (query: string) => {
-    setLocation(`/products?search=${encodeURIComponent(query)}`);
+    if (query.trim()) {
+      setLocation(`/products?search=${encodeURIComponent(query)}`);
+    } else {
+      setLocation('/products');
+    }
   };
 
   return (
@@ -45,7 +49,7 @@ export function Navbar() {
 
             {/* Search Bar */}
             <div className="hidden md:flex flex-1 max-w-lg mx-8">
-              <SearchBar onSearch={handleSearch} className="w-full" value={getCurrentSearchValue()} />
+              <SearchBar onSearch={handleSearch} className="w-full" value={currentSearchValue} />
             </div>
 
             {/* Navigation Actions */}
@@ -145,7 +149,7 @@ export function Navbar() {
 
         {/* Mobile Search */}
         <div className="md:hidden px-4 pb-4">
-          <SearchBar onSearch={handleSearch} value={getCurrentSearchValue()} />
+          <SearchBar onSearch={handleSearch} value={currentSearchValue} />
         </div>
       </nav>
 
