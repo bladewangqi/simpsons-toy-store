@@ -2,49 +2,64 @@ import { useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, handleRedirectResult } from '../lib/firebase';
 import { useAuthStore } from '../stores/authStore';
-import { User } from '../types';
 
-export function useAuth() {
-  const { user, isAuthenticated, isLoading, setUser, setLoading } = useAuthStore();
-
+export const useAuth = () => {
+  const { user, isLoading, isAuthenticated, setUser, setLoading } = useAuthStore();
+  
   useEffect(() => {
-    // Handle redirect result first
-    handleRedirectResult().then((result) => {
-      if (result?.user) {
-        const userData: User = {
-          uid: result.user.uid,
-          email: result.user.email,
-          displayName: result.user.displayName,
-          photoURL: result.user.photoURL,
-        };
-        setUser(userData);
-      }
-    }).catch((error) => {
-      console.error('Redirect result error:', error);
-    });
+    let isMounted = true;
+    
+    // Handle any pending redirect result first
+    handleRedirectResult()
+      .then((result) => {
+        if (!isMounted) return;
+        
+        if (result) {
+          const userData = {
+            uid: result.user.uid,
+            email: result.user.email || '',
+            displayName: result.user.displayName || '',
+            photoURL: result.user.photoURL || '',
+            emailVerified: result.user.emailVerified,
+          };
+          
+          setUser(userData);
+        }
+      })
+             .catch((error) => {
+         // Handle redirect errors silently
+       });
 
-    // Listen for auth state changes
+    // Set up auth state listener
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (!isMounted) return;
+      
       if (firebaseUser) {
-        const userData: User = {
+        const userData = {
           uid: firebaseUser.uid,
-          email: firebaseUser.email,
-          displayName: firebaseUser.displayName,
-          photoURL: firebaseUser.photoURL,
+          email: firebaseUser.email || '',
+          displayName: firebaseUser.displayName || '',
+          photoURL: firebaseUser.photoURL || '',
+          emailVerified: firebaseUser.emailVerified,
         };
+        
         setUser(userData);
       } else {
         setUser(null);
       }
+      
       setLoading(false);
     });
 
-    return () => unsubscribe();
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
   }, [setUser, setLoading]);
 
   return {
     user,
-    isAuthenticated,
     isLoading,
+    isAuthenticated,
   };
-}
+};

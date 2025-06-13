@@ -7,20 +7,19 @@ import { useCart } from '../hooks/useCart';
 import { useFavorites } from '../hooks/useFavorites';
 import { formatMoney } from '../utils/formatMoney';
 import { cn } from '@/lib/utils';
-import { Product } from '../types';
-import { ToastNotification } from '../components/common/ToastNotification';
+import { useToast } from '@/hooks/use-toast';
 import productsData from '../data/products.json';
+import { Product } from '../types';
 
 export default function ProductDetail() {
   const [, params] = useRoute('/product/:id');
   const [product, setProduct] = useState<Product | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
 
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { toast } = useToast();
 
   const products = productsData as Product[];
 
@@ -63,18 +62,21 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
-    setToastMessage(`${quantity} ${product.name} added to cart!`);
-    setShowToast(true);
+    toast({
+      title: "Added to Cart",
+      description: `${quantity} ${product.name} has been added to your cart.`,
+    });
   };
 
   const handleToggleFavorite = () => {
+    const willBeFavorite = !isFavorite(product.id);
     toggleFavorite(product.id);
-    setToastMessage(
-      isFavorite(product.id) 
-        ? 'Removed from favorites' 
-        : 'Added to favorites'
-    );
-    setShowToast(true);
+    toast({
+      title: willBeFavorite ? "Added to Favorites" : "Removed from Favorites",
+      description: willBeFavorite 
+        ? `${product.name} has been added to your favorites.`
+        : `${product.name} has been removed from your favorites.`,
+    });
   };
 
   const renderRating = () => {
@@ -371,13 +373,6 @@ export default function ProductDetail() {
       </div>
 
       <Footer />
-
-      <ToastNotification
-        message={toastMessage}
-        type="success"
-        visible={showToast}
-        onDismiss={() => setShowToast(false)}
-      />
     </div>
   );
 }

@@ -4,8 +4,7 @@ import { useCart } from '../../hooks/useCart';
 import { useFavorites } from '../../hooks/useFavorites';
 import { formatMoney } from '../../utils/formatMoney';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
-import { ToastNotification } from '../common/ToastNotification';
+import { useToast } from '@/hooks/use-toast';
 
 interface ProductCardProps {
   product: Product;
@@ -15,15 +14,16 @@ interface ProductCardProps {
 export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const { toast } = useToast();
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
-    setToastMessage(`${product.name} added to cart!`);
-    setShowToast(true);
+    toast({
+      title: "Added to Cart",
+      description: `${product.name} has been added to your cart.`,
+    });
   };
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
@@ -60,128 +60,119 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
   };
 
   return (
-    <>
-      <Link href={`/product/${product.id}`}>
-        <div className="bg-yellow-50 dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer border-3 border-yellow-400 hover:border-blue-500">
-          {/* Product Image */}
-          <div className="relative overflow-hidden">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            
-            {/* Quick Actions Overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
-              <div className="absolute top-4 right-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <Link href={`/product/${product.id}`}>
+      <div className="bg-yellow-50 dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer border-3 border-yellow-400 hover:border-blue-500">
+        {/* Product Image */}
+        <div className="relative overflow-hidden">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+          
+          {/* Quick Actions Overlay */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
+            <div className="absolute top-4 right-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <button 
+                onClick={handleToggleFavorite}
+                className="w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
+              >
+                <i className={cn(
+                  isFavorite(product.id) ? 'fas fa-heart text-red-500' : 'far fa-heart text-gray-600'
+                )} />
+              </button>
+              {onQuickView && (
                 <button 
-                  onClick={handleToggleFavorite}
+                  onClick={handleQuickView}
                   className="w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
                 >
-                  <i className={cn(
-                    isFavorite(product.id) ? 'fas fa-heart text-red-500' : 'far fa-heart text-gray-600'
-                  )} />
+                  <i className="fas fa-eye text-gray-600" />
                 </button>
-                {onQuickView && (
-                  <button 
-                    onClick={handleQuickView}
-                    className="w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
-                  >
-                    <i className="fas fa-eye text-gray-600" />
-                  </button>
-                )}
-              </div>
+              )}
             </div>
+          </div>
 
-            {/* Product Labels */}
-            <div className="absolute top-4 left-4 space-y-1">
-              {product.isBestSeller && (
-                <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                  Best Seller
-                </span>
-              )}
-              {product.isNew && (
-                <span className="bg-yellow-400 text-blue-900 px-2 py-1 rounded-full text-xs font-bold">
-                  New Arrival
-                </span>
-              )}
-              {product.isLimitedEdition && (
-                <span className="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                  Limited Edition
-                </span>
-              )}
-            </div>
-            
-            {/* Discount Badge */}
-            {product.discount && (
-              <div className="absolute bottom-4 left-4">
-                <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-                  -{product.discount}%
-                </span>
-              </div>
+          {/* Product Labels */}
+          <div className="absolute top-4 left-4 space-y-1">
+            {product.isBestSeller && (
+              <span className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                Best Seller
+              </span>
+            )}
+            {product.isNew && (
+              <span className="bg-yellow-400 text-blue-900 px-2 py-1 rounded-full text-xs font-bold">
+                New Arrival
+              </span>
+            )}
+            {product.isLimitedEdition && (
+              <span className="bg-purple-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                Limited Edition
+              </span>
             )}
           </div>
-
-          {/* Product Details */}
-          <div className="p-6">
-            <div className="mb-2">
-              <span className="text-xs text-orange-500 bg-orange-100 px-2 py-1 rounded-full font-semibold uppercase tracking-wide border border-orange-300">
-                {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+          
+          {/* Discount Badge */}
+          {product.discount && (
+            <div className="absolute bottom-4 left-4">
+              <span className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold">
+                -{product.discount}%
               </span>
             </div>
-            <h3 className="text-lg font-bold text-blue-900 dark:text-white mb-2 line-clamp-2">
-              {product.name}
-            </h3>
-            <p className="text-sm text-blue-800 dark:text-gray-400 mb-4 line-clamp-2">
-              {product.description}
-            </p>
-            
-            {/* Rating */}
-            <div className="flex items-center mb-4">
-              <div className="flex text-yellow-400">
-                {renderRating()}
-              </div>
-              <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
-                ({product.rating}) • {product.reviewCount} reviews
-              </span>
-            </div>
+          )}
+        </div>
 
-            {/* Price and Actions */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span className="text-2xl font-bold text-blue-900 dark:text-white">
-                  {formatMoney(product.price)}
+        {/* Product Details */}
+        <div className="p-6">
+          <div className="mb-2">
+            <span className="text-xs text-orange-500 bg-orange-100 px-2 py-1 rounded-full font-semibold uppercase tracking-wide border border-orange-300">
+              {product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+            </span>
+          </div>
+          <h3 className="text-lg font-bold text-blue-900 dark:text-white mb-2 line-clamp-2">
+            {product.name}
+          </h3>
+          <p className="text-sm text-blue-800 dark:text-gray-400 mb-4 line-clamp-2">
+            {product.description}
+          </p>
+          
+          {/* Rating */}
+          <div className="flex items-center mb-4">
+            <div className="flex text-yellow-400">
+              {renderRating()}
+            </div>
+            <span className="text-sm text-gray-600 dark:text-gray-400 ml-2">
+              ({product.rating}) • {product.reviewCount} reviews
+            </span>
+          </div>
+
+          {/* Price and Actions */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl font-bold text-blue-900 dark:text-white">
+                {formatMoney(product.price)}
+              </span>
+              {product.originalPrice && (
+                <span className="text-lg text-red-500 dark:text-gray-400 line-through">
+                  {formatMoney(product.originalPrice)}
                 </span>
-                {product.originalPrice && (
-                  <span className="text-lg text-red-500 dark:text-gray-400 line-through">
-                    {formatMoney(product.originalPrice)}
-                  </span>
-                )}
-              </div>
-              <button 
-                onClick={handleAddToCart}
-                disabled={!product.inStock}
-                className={cn(
-                  'px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2',
-                  product.inStock
-                    ? 'bg-yellow-400 hover:bg-yellow-500 text-blue-900 border-blue-900'
-                    : 'bg-gray-300 text-gray-500 cursor-not-allowed border-gray-400'
-                )}
-              >
-                <i className="fas fa-cart-plus mr-1" />
-                {product.inStock ? 'Add' : 'Out of Stock'}
-              </button>
+              )}
             </div>
+            <button 
+              onClick={handleAddToCart}
+              disabled={!product.inStock}
+              className={cn(
+                'px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 border-2',
+                product.inStock
+                  ? 'bg-yellow-400 hover:bg-yellow-500 text-blue-900 border-blue-900'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed border-gray-400'
+              )}
+            >
+              <i className="fas fa-cart-plus mr-1" />
+              {product.inStock ? 'Add' : 'Out of Stock'}
+            </button>
           </div>
         </div>
-      </Link>
-
-      <ToastNotification
-        message={toastMessage}
-        type="success"
-        visible={showToast}
-        onDismiss={() => setShowToast(false)}
-      />
-    </>
+      </div>
+    </Link>
   );
 }

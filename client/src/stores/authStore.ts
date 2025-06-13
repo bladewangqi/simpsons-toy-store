@@ -13,13 +13,19 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       isAuthenticated: false,
       isLoading: true,
-      setUser: (user) => set({ user, isAuthenticated: !!user }),
-      setLoading: (isLoading) => set({ isLoading }),
-      logout: () => set({ user: null, isAuthenticated: false }),
+      setUser: (user) => {
+        set({ user, isAuthenticated: !!user });
+      },
+      setLoading: (isLoading) => {
+        set({ isLoading });
+      },
+      logout: () => {
+        set({ user: null, isAuthenticated: false });
+      },
     }),
     {
       name: 'simpsons-auth',

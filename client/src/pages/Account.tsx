@@ -54,6 +54,7 @@ export default function Account() {
         description: "You have been signed out of your account.",
       });
     } catch (error: any) {
+      console.error('Account: Sign out error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to sign out",

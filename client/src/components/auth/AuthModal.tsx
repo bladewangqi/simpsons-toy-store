@@ -24,9 +24,20 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleGoogleSignIn = async () => {
     try {
       setLoading(true);
-      await signInWithGoogle();
-      // The redirect will handle the rest
+      const result = await signInWithGoogle();
+      
+      // If popup authentication succeeded, result will be returned
+      if (result) {
+
+        onClose(); // Close the modal
+        toast({
+          title: "Welcome!",
+          description: `Successfully signed in as ${result.user.displayName || result.user.email}`,
+        });
+      }
+      // If redirect was used, the page will reload and we won't reach this point
     } catch (error: any) {
+      console.error('🚨 Google sign-in error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to sign in with Google",
@@ -40,10 +51,29 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleEmailAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Basic validation
+    if (!email.trim() || !password.trim()) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both email and password",
+        variant: "destructive",
+      });
+      return;
+    }
+
     if (mode === 'signup' && password !== confirmPassword) {
       toast({
-        title: "Error",
+        title: "Password Mismatch",
         description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (mode === 'signup' && password.length < 6) {
+      toast({
+        title: "Weak Password",
+        description: "Password must be at least 6 characters long",
         variant: "destructive",
       });
       return;
@@ -64,11 +94,94 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         description: mode === 'signin' ? "Welcome back!" : "Account created successfully!",
       });
     } catch (error: any) {
+      console.error('Email auth error:', error);
+      
+      // Handle specific Firebase auth errors
+      let errorTitle = "Authentication Error";
+      let errorDescription = "Authentication failed";
+      
+      switch (error.code) {
+        case 'auth/invalid-credential':
+          if (mode === 'signin') {
+            errorTitle = "Invalid Login";
+            errorDescription = "The email or password is incorrect. Please check your credentials or create a new account.";
+          } else {
+            errorDescription = "Invalid credentials provided";
+          }
+          break;
+          
+        case 'auth/user-not-found':
+          errorTitle = "Account Not Found";
+          errorDescription = "No account found with this email. Would you like to create a new account?";
+          break;
+          
+        case 'auth/wrong-password':
+          errorTitle = "Incorrect Password";
+          errorDescription = "The password is incorrect. Please try again or reset your password.";
+          break;
+          
+        case 'auth/email-already-in-use':
+          errorTitle = "Email Already Registered";
+          errorDescription = "An account with this email already exists. Please sign in instead.";
+          break;
+          
+        case 'auth/weak-password':
+          errorTitle = "Weak Password";
+          errorDescription = "Password should be at least 6 characters long";
+          break;
+          
+        case 'auth/invalid-email':
+          errorTitle = "Invalid Email";
+          errorDescription = "Please enter a valid email address";
+          break;
+          
+        case 'auth/too-many-requests':
+          errorTitle = "Too Many Attempts";
+          errorDescription = "Too many failed attempts. Please try again later.";
+          break;
+          
+        default:
+          errorDescription = error.message || "Authentication failed. Please try again.";
+      }
+      
       toast({
-        title: "Error",
-        description: error.message || "Authentication failed",
+        title: errorTitle,
+        description: errorDescription,
         variant: "destructive",
       });
+      
+      // Auto-suggest switching modes for certain errors
+      if (error.code === 'auth/user-not-found' && mode === 'signin') {
+        setTimeout(() => {
+          toast({
+            title: "Suggestion",
+            description: "Try creating a new account instead",
+            action: (
+              <button 
+                onClick={() => setMode('signup')}
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign Up
+              </button>
+            ),
+          });
+        }, 2000);
+      } else if (error.code === 'auth/email-already-in-use' && mode === 'signup') {
+        setTimeout(() => {
+          toast({
+            title: "Suggestion", 
+            description: "Try signing in instead",
+            action: (
+              <button 
+                onClick={() => setMode('signin')}
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign In
+              </button>
+            ),
+          });
+        }, 2000);
+      }
     } finally {
       setLoading(false);
     }

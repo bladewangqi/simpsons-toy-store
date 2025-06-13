@@ -7,6 +7,8 @@ import { SearchBar } from '../common/SearchBar';
 import { useState, useMemo } from 'react';
 import { AuthModal } from '../auth/AuthModal';
 import { CartDrawer } from '../cart/CartDrawer';
+import { logOut } from '../../lib/firebase';
+import { useToast } from '@/hooks/use-toast';
 
 export function Navbar() {
   const [location, setLocation] = useLocation();
@@ -16,6 +18,7 @@ export function Navbar() {
   const { theme, toggleTheme } = useTheme();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const { toast } = useToast();
 
   // Get current search value from URL - reactive to location changes
   const currentSearchValue = useMemo(() => {
@@ -28,6 +31,24 @@ export function Navbar() {
       setLocation(`/products?search=${encodeURIComponent(query)}`);
     } else {
       setLocation('/products');
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await logOut();
+      setShowUserMenu(false); // Close the dropdown menu
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account.",
+      });
+    } catch (error: any) {
+      console.error('Navbar: Sign out error:', error);
+      toast({
+        title: "Error",
+        description: error.message || "Failed to sign out",
+        variant: "destructive",
+      });
     }
   };
 
@@ -121,6 +142,7 @@ export function Navbar() {
                     <Link 
                       href="/account" 
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700"
+                      onClick={() => setShowUserMenu(false)}
                     >
                       <i className="fas fa-user mr-2" />
                       My Account
@@ -128,13 +150,14 @@ export function Navbar() {
                     <Link 
                       href="/orders" 
                       className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-700"
+                      onClick={() => setShowUserMenu(false)}
                     >
                       <i className="fas fa-box mr-2" />
                       Order History
                     </Link>
                     <hr className="my-1 border-gray-200 dark:border-gray-700" />
                     <button 
-                      onClick={() => {/* Add logout logic */}}
+                      onClick={handleSignOut}
                       className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-slate-700"
                     >
                       <i className="fas fa-sign-out-alt mr-2" />

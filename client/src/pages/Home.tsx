@@ -76,15 +76,6 @@ export default function Home() {
                     className="w-full h-80 object-cover rounded-2xl shadow-lg border-2 border-blue-900"
                   />
                 </div>
-                
-                <div className="absolute -top-4 -right-4 bg-red-500 text-white px-4 py-2 rounded-full font-bold shadow-lg animate-pulse border-2 border-blue-900">
-                  <i className="fas fa-fire mr-1" />
-                  Hot Item!
-                </div>
-                <div className="absolute -bottom-4 -left-4 bg-green-500 text-white px-4 py-2 rounded-full font-bold shadow-lg border-2 border-blue-900">
-                  <i className="fas fa-truck mr-1" />
-                  Free Shipping
-                </div>
               </div>
             </div>
           </div>
