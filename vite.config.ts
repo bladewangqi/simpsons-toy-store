@@ -4,6 +4,10 @@ import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 
 export default defineConfig({
+  // Add base path for GitHub Pages - use GITHUB_REPOSITORY for dynamic repo name
+  base: process.env.NODE_ENV === "production" 
+    ? `/${process.env.GITHUB_REPOSITORY?.split('/')[1] || 'simpsons-toy-store'}/`
+    : "/",
   plugins: [
     react(),
     runtimeErrorOverlay(),
@@ -27,6 +31,7 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    assetsDir: "assets",
   },
   server: {
     fs: {
