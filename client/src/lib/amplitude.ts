@@ -7,7 +7,7 @@ const AMPLITUDE_API_KEY = import.meta.env.VITE_AMPLITUDE_API_KEY;
 if (AMPLITUDE_API_KEY) {
   amplitude.initAll(AMPLITUDE_API_KEY);
 }
-
+console.log('What is the amplitude api key: ', AMPLITUDE_API_KEY)
 // Helper function to format product for tracking
 const formatProductForTracking = (product: Product, quantity: number = 1): any => ({
   product_id: product.id,
