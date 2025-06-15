@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { AuthModal } from '../components/auth/AuthModal';
@@ -8,6 +8,7 @@ import { useFavorites } from '../hooks/useFavorites';
 import { Link } from 'wouter';
 import productsData from '../data/products.json';
 import { Product } from '../types';
+import { trackViewedFavorites } from '../lib/amplitude';
 
 export default function Favorites() {
   const { user, isAuthenticated } = useAuth();
@@ -16,6 +17,13 @@ export default function Favorites() {
 
   const products = productsData as Product[];
   const favoriteProducts = products.filter(p => favorites.includes(p.id));
+
+  // Track favorites view when user has favorites and is authenticated
+  useEffect(() => {
+    if (isAuthenticated && favoriteProducts.length > 0) {
+      trackViewedFavorites(favoriteProducts, favoriteProducts.length);
+    }
+  }, [isAuthenticated, favoriteProducts.length]); // Dependencies: authentication status and favorites count
 
   if (!isAuthenticated) {
     return (

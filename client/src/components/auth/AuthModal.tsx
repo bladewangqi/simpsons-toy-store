@@ -6,6 +6,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
+import {
+  trackSignedIn,
+  trackStartedSignup,
+  trackCreatedAccount,
+  trackEncounteredError,
+  setUserId,
+} from '../../lib/amplitude';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -28,7 +35,17 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       
       // If popup authentication succeeded, result will be returned
       if (result) {
-
+        // Set user ID for tracking
+        setUserId(result.user.uid);
+        
+        if (mode === 'signup') {
+          // Track that user successfully completed Google signup
+          trackCreatedAccount('google');
+        } else {
+          // Track successful Google sign-in
+          trackSignedIn('google');
+        }
+        
         onClose(); // Close the modal
         toast({
           title: "Welcome!",
@@ -37,7 +54,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       }
       // If redirect was used, the page will reload and we won't reach this point
     } catch (error: any) {
-      console.error('🚨 Google sign-in error:', error);
+      // Track authentication error
+      trackEncounteredError('authentication', 'google_signin_failed', error.code);
+      
       toast({
         title: "Error",
         description: error.message || "Failed to sign in with Google",
@@ -83,9 +102,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       setLoading(true);
       
       if (mode === 'signin') {
-        await signInWithEmail(email, password);
+        const result = await signInWithEmail(email, password);
+        
+        // Set user ID and track successful sign-in
+        setUserId(result.user.uid);
+        trackSignedIn('email');
       } else {
-        await signUpWithEmail(email, password);
+        
+        const result = await signUpWithEmail(email, password);
+
+        // Set user ID and track successful account creation
+        setUserId(result.user.uid);
+        trackCreatedAccount('email');
       }
       
       onClose();
@@ -95,6 +123,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       });
     } catch (error: any) {
       console.error('Email auth error:', error);
+      
+      // Track authentication error
+      trackEncounteredError('authentication', `email_${mode}_failed`, error.code);
       
       // Handle specific Firebase auth errors
       let errorTitle = "Authentication Error";
@@ -196,6 +227,9 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
   const toggleMode = () => {
     setMode(mode === 'signin' ? 'signup' : 'signin');
+    if (mode === 'signup') {
+      trackStartedSignup();
+    }
     resetForm();
   };
 

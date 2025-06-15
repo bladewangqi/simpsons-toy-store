@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Product, FilterOptions } from '../types';
 import { searchProducts, filterByCategory, filterByPrice, sortProducts } from '../utils/search';
 import productsData from '../data/products.json';
+import { trackCompletedSearch } from '../lib/amplitude';
 
 export default function ProductList() {
   const [location] = useLocation();
@@ -72,6 +73,13 @@ export default function ProductList() {
 
     return result;
   }, [products, filters]);
+
+  // Track search completion when search query changes
+  useEffect(() => {
+    if (filters.search && filters.search.trim()) {
+      trackCompletedSearch(filters.search.trim(), filteredProducts.length);
+    }
+  }, [filters.search, filteredProducts.length]);
 
   // Paginate results
   const paginatedProducts = useMemo(() => {
@@ -212,6 +220,7 @@ export default function ProductList() {
             onQuickView={handleQuickView}
             onLoadMore={handleLoadMore}
             hasMore={hasMore}
+            pageSource={filters.search ? 'search' : 'catalog'}
           />
         </div>
       </section>

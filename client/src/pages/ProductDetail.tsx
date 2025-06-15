@@ -10,6 +10,12 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import productsData from '../data/products.json';
 import { Product } from '../types';
+import {
+  trackViewedProductDetails,
+  trackAddedToCart,
+  trackFavoritedProduct,
+  trackRemovedFavorites,
+} from '../lib/amplitude';
 
 export default function ProductDetail() {
   const [, params] = useRoute('/product/:id');
@@ -25,10 +31,21 @@ export default function ProductDetail() {
 
   useEffect(() => {
     if (params?.id) {
+      // Scroll to top when navigating to new product
+      window.scrollTo(0, 0);
+      
       const foundProduct = products.find(p => p.id === params.id);
       setProduct(foundProduct || null);
       setSelectedImage(0);
       setQuantity(1);
+      
+      // Track product detail view
+      if (foundProduct) {
+        // Determine page source from referrer or URL params
+        const urlParams = new URLSearchParams(window.location.search);
+        const source = urlParams.get('from') || 'direct';
+        trackViewedProductDetails(foundProduct, source);
+      }
     }
   }, [params?.id, products]);
 
@@ -62,6 +79,10 @@ export default function ProductDetail() {
 
   const handleAddToCart = () => {
     addToCart(product, quantity);
+    
+    // Track add to cart event
+    trackAddedToCart(product, quantity);
+    
     toast({
       title: "Added to Cart",
       description: `${quantity} ${product.name} has been added to your cart.`,
@@ -71,6 +92,10 @@ export default function ProductDetail() {
   const handleToggleFavorite = () => {
     const willBeFavorite = !isFavorite(product.id);
     toggleFavorite(product.id);
+    
+    // Track favorite action
+    willBeFavorite ? trackFavoritedProduct(product) : trackRemovedFavorites(product);
+    
     toast({
       title: willBeFavorite ? "Added to Favorites" : "Removed from Favorites",
       description: willBeFavorite 

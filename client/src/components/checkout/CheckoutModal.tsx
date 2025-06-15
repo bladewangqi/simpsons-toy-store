@@ -11,6 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { ShippingAddress } from '../../types';
+import { trackSubmittedOrder, trackCompletedOrder } from '../../lib/amplitude';
+import { Product } from '../../types';
+import productsData from '../../data/products.json';
+import { useCartStore } from '../../stores/cartStore';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -21,6 +25,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { items, total, clearCart } = useCart();
   const { createOrder } = useOrders();
   const { user, isAuthenticated } = useAuth();
+  const { cartId } = useCartStore();
   const { toast } = useToast();
 
   const [loading, setLoading] = useState(false);
@@ -49,6 +54,32 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const tax = calculateTax(subtotal);
   const shipping = isEligibleForFreeShipping(subtotal) ? 0 : 9.99;
   const finalTotal = subtotal + tax + shipping;
+
+  const products = productsData as Product[];
+  
+  // Helper function to convert CartItem[] to expected format
+  const formatCartItemsForTracking = () => {
+    return items.map(item => {
+      const fullProduct = products.find(p => p.id === item.productId) || {
+        id: item.productId,
+        name: item.name,
+        price: item.price,
+        category: 'toys',
+        image: item.image,
+        description: '',
+        rating: 4.5,
+        reviewCount: 0,
+        inStock: true,
+        isBestSeller: false,
+        isNew: false,
+        isLimitedEdition: false,
+      };
+      return {
+        product: fullProduct,
+        quantity: item.quantity,
+      };
+    });
+  };
 
   const handleShippingChange = (field: keyof ShippingAddress, value: string) => {
     setShippingData(prev => ({ ...prev, [field]: value }));
@@ -102,6 +133,14 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
     try {
       setLoading(true);
+      // Track that the order was submitted - use consistent cartId from store
+      trackSubmittedOrder(
+        formatCartItemsForTracking(),
+        cartId,
+        subtotal,
+        finalTotal,
+        paymentMethod === 'card' ? 'Credit Card' : 'PayPal'
+      );
       
       toast({
         title: "Processing Payment",
@@ -122,6 +161,18 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
       // Close modal
       onClose();
 
+      // Track that the order was completed - use consistent cartId from store
+      trackCompletedOrder(
+        formatCartItemsForTracking(),
+        cartId,
+        {
+          totalCartValue: subtotal,
+          orderTotal: finalTotal,
+          paymentMethod: paymentMethod === 'card' ? 'Credit Card' : 'PayPal',
+          orderId: order.id,
+          revenue: finalTotal,
+        }
+      );
       // Show success message
       toast({
         title: "Order Placed Successfully!",

@@ -7,9 +7,10 @@ interface ProductGridProps {
   onQuickView?: (product: Product) => void;
   onLoadMore?: () => void;
   hasMore?: boolean;
+  pageSource?: string; // For tracking where clicks come from
 }
 
-export function ProductGrid({ products, loading, onQuickView, onLoadMore, hasMore }: ProductGridProps) {
+export function ProductGrid({ products, loading, onQuickView, onLoadMore, hasMore, pageSource = 'catalog' }: ProductGridProps) {
   if (loading && products.length === 0) {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -50,11 +51,13 @@ export function ProductGrid({ products, loading, onQuickView, onLoadMore, hasMor
   return (
     <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {products.map((product) => (
+        {products.map((product, index) => (
           <ProductCard
             key={product.id}
             product={product}
             onQuickView={onQuickView}
+            rank={pageSource === 'search' ? index + 1 : undefined}
+            pageSource={pageSource}
           />
         ))}
       </div>

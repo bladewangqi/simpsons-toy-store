@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
@@ -6,14 +6,113 @@ import { CheckoutModal } from '../components/checkout/CheckoutModal';
 import { Button } from '@/components/ui/button';
 import { useCart } from '../hooks/useCart';
 import { formatMoney, isEligibleForFreeShipping } from '../utils/formatMoney';
+import { Product } from '../types';
+import productsData from '../data/products.json';
+import {
+  trackViewedCart,
+  trackRemovedCartProduct,
+  trackStartedCheckout,
+} from '../lib/amplitude';
+import { useCartStore } from '../stores/cartStore';
 
 export default function Cart() {
   const { items, removeFromCart, updateCartQuantity, total } = useCart();
+  const { cartId } = useCartStore();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
   const freeShippingThreshold = 50;
   const isEligibleForFree = isEligibleForFreeShipping(total, freeShippingThreshold);
   const amountForFreeShipping = Math.max(0, freeShippingThreshold - total);
+  
+  const products = productsData as Product[];
+
+  // Helper function to get full product data from productId
+  const getFullProductData = (productId: string): Product | null => {
+    return products.find(p => p.id === productId) || null;
+  };
+
+  // Track cart view when component mounts and items are present
+  useEffect(() => {
+    if (items.length > 0) {
+      const cartItems = items.map(item => {
+        const fullProduct = getFullProductData(item.productId);
+        return {
+          product: fullProduct || {
+            id: item.productId,
+            name: item.name,
+            price: item.price,
+            category: 'toys',
+            image: item.image,
+            description: '',
+            rating: 4.5,
+            reviewCount: 0,
+            inStock: true,
+            isBestSeller: false,
+            isNew: false,
+            isLimitedEdition: false,
+          },
+          quantity: item.quantity,
+        };
+      });
+      
+      trackViewedCart(cartItems, cartId, total);
+    }
+  }, [items, total, cartId]);
+
+  const handleRemoveFromCart = (productId: string) => {
+    const item = items.find(i => i.productId === productId);
+    
+    if (item) {
+      const fullProduct = getFullProductData(item.productId);
+      const product = fullProduct || {
+        id: item.productId,
+        name: item.name,
+        price: item.price,
+        category: 'toys',
+        image: item.image,
+        description: '',
+        rating: 4.5,
+        reviewCount: 0,
+        inStock: true,
+        isBestSeller: false,
+        isNew: false,
+        isLimitedEdition: false,
+      };
+      
+      trackRemovedCartProduct(product, item.quantity, cartId);
+    }
+    
+    removeFromCart(productId);
+  };
+
+  const handleStartCheckout = () => {
+    if (items.length > 0) {
+      const cartItems = items.map(item => {
+        const fullProduct = getFullProductData(item.productId);
+        return {
+          product: fullProduct || {
+            id: item.productId,
+            name: item.name,
+            price: item.price,
+            category: 'toys',
+            image: item.image,
+            description: '',
+            rating: 4.5,
+            reviewCount: 0,
+            inStock: true,
+            isBestSeller: false,
+            isNew: false,
+            isLimitedEdition: false,
+          },
+          quantity: item.quantity,
+        };
+      });
+      
+      trackStartedCheckout(cartItems, cartId, total);
+    }
+    
+    setIsCheckoutOpen(true);
+  };
 
   if (items.length === 0) {
     return (
@@ -123,7 +222,10 @@ export default function Cart() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => removeFromCart(item.productId)}
+                          onClick={(e) => {
+                            console.log('🔥 REMOVE BUTTON CLICKED!', item.productId);
+                            handleRemoveFromCart(item.productId);
+                          }}
                           className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 mt-2"
                         >
                           <i className="fas fa-trash mr-1" />
@@ -197,7 +299,7 @@ export default function Cart() {
               {/* Actions */}
               <div className="space-y-3">
                 <Button
-                  onClick={() => setIsCheckoutOpen(true)}
+                  onClick={handleStartCheckout}
                   className="w-full bg-blue-900 hover:bg-blue-800 text-white py-3 text-lg"
                 >
                   <i className="fas fa-credit-card mr-2" />

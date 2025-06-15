@@ -5,21 +5,40 @@ import { useFavorites } from '../../hooks/useFavorites';
 import { formatMoney } from '../../utils/formatMoney';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
+import {
+  trackAddedToCart,
+  trackFavoritedProduct,
+  trackClickedSearchResult,
+  trackRemovedFavorites,
+} from '../../lib/amplitude';
 
 interface ProductCardProps {
   product: Product;
   onQuickView?: (product: Product) => void;
+  rank?: number; // For tracking search result clicks
+  pageSource?: string; // For tracking where the product click came from
 }
 
-export function ProductCard({ product, onQuickView }: ProductCardProps) {
+export function ProductCard({ product, onQuickView, rank, pageSource = 'catalog' }: ProductCardProps) {
   const { addToCart } = useCart();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { toast } = useToast();
+
+  const handleProductClick = () => {
+    if (rank !== undefined) {
+      // This is from search results
+      trackClickedSearchResult(product, rank);
+    }
+  };
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
+    
+    // Track add to cart event
+    trackAddedToCart(product, 1);
+    
     toast({
       title: "Added to Cart",
       description: `${product.name} has been added to your cart.`,
@@ -29,7 +48,12 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    const willBeFavorite = !isFavorite(product.id);
     toggleFavorite(product.id);
+    
+    // Track added to favorites or removed from favorites action
+    willBeFavorite ? trackFavoritedProduct(product) : trackRemovedFavorites(product);
   };
 
   const handleQuickView = (e: React.MouseEvent) => {
@@ -61,7 +85,10 @@ export function ProductCard({ product, onQuickView }: ProductCardProps) {
 
   return (
     <Link href={`/product/${product.id}`}>
-      <div className="bg-yellow-50 dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer border-3 border-yellow-400 hover:border-blue-500">
+      <div 
+        className="bg-yellow-50 dark:bg-slate-800 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-2 transition-all duration-300 group overflow-hidden cursor-pointer border-3 border-yellow-400 hover:border-blue-500"
+        onClick={handleProductClick}
+      >
         {/* Product Image */}
         <div className="relative overflow-hidden">
           <img

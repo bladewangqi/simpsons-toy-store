@@ -5,12 +5,50 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { useState } from 'react';
 import { CheckoutModal } from '../checkout/CheckoutModal';
 import { Link } from 'wouter';
+import { trackStartedCheckout } from '../../lib/amplitude';
+import { Product } from '../../types';
+import productsData from '../../data/products.json';
+import { useCartStore } from '../../stores/cartStore';
 
 export function CartDrawer() {
   const { items, isOpen, setOpen, removeFromCart, updateCartQuantity, total } = useCart();
+  const { cartId } = useCartStore();
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
+  const products = productsData as Product[];
+
+  // Helper function to get full product data from productId
+  const getFullProductData = (productId: string): Product | null => {
+    return products.find(p => p.id === productId) || null;
+  };
+
   const handleProceedToCheckout = () => {
+    // Track checkout start from cart drawer
+    if (items.length > 0) {
+      const cartItems = items.map(item => {
+        const fullProduct = getFullProductData(item.productId);
+        return {
+          product: fullProduct || {
+            id: item.productId,
+            name: item.name,
+            price: item.price,
+            category: 'toys',
+            image: item.image,
+            description: '',
+            rating: 4.5,
+            reviewCount: 0,
+            inStock: true,
+            isBestSeller: false,
+            isNew: false,
+            isLimitedEdition: false,
+          },
+          quantity: item.quantity,
+        };
+      });
+      
+      trackStartedCheckout(cartItems, cartId, total);
+    }
+
     setOpen(false);
     setIsCheckoutOpen(true);
   };
