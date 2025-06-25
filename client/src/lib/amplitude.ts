@@ -1,4 +1,5 @@
 import * as amplitude from '@amplitude/unified';
+import { Identify } from '@amplitude/analytics-browser';  // 👈 builder comes from here
 import { Product } from '../types';
 
 // Initialize Amplitude
@@ -73,7 +74,6 @@ export const trackClickedSearchResult = (product: Product, rank: number) => {
 
 // Product Events
 export const trackViewedProductDetails = (product: Product, pageSource: string = 'direct') => {
-  console.log('Viewed Product Details, the amplitude api key is', AMPLITUDE_API_KEY);
   if (!AMPLITUDE_API_KEY) return;
   
   amplitude.track('Viewed Product Details', {
@@ -235,10 +235,14 @@ export const setUserId = (userId: string) => {
   amplitude.setUserId(userId);
 };
 
-// Set user properties - temporarily disabled due to API incompatibility
-// export const setUserProperties = (properties: Record<string, any>) => {
-//   if (!AMPLITUDE_API_KEY) return;
-//   amplitude.identify(properties);
-// };
+// Set user properties
+export const setUserProperties = (properties: Record<string, any>) => {
+  if (!AMPLITUDE_API_KEY) return;
+  let identifyEvent = new Identify();
+  Object.entries(properties).forEach(([key, value]) => {
+    identifyEvent = identifyEvent.set(key, value);
+  });
+  amplitude.identify(identifyEvent);
+};
 
 export default amplitude; 

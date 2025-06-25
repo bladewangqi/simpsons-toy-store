@@ -223,7 +223,6 @@ export default function Cart() {
                           variant="ghost"
                           size="sm"
                           onClick={(e) => {
-                            console.log('🔥 REMOVE BUTTON CLICKED!', item.productId);
                             handleRemoveFromCart(item.productId);
                           }}
                           className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 mt-2"

@@ -6,13 +6,15 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { useToast } from '@/hooks/use-toast';
-import {
+import amplitude, {
   trackSignedIn,
   trackStartedSignup,
   trackCreatedAccount,
   trackEncounteredError,
   setUserId,
+  setUserProperties,
 } from '../../lib/amplitude';
+import { set } from 'date-fns';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -37,7 +39,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
       if (result) {
         // Set user ID for tracking
         setUserId(result.user.uid);
-        
+        setUserProperties({'account type': 0});
         if (mode === 'signup') {
           // Track that user successfully completed Google signup
           trackCreatedAccount('google');
@@ -106,6 +108,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
         
         // Set user ID and track successful sign-in
         setUserId(result.user.uid);
+        setUserProperties({'account type': 1});
         trackSignedIn('email');
       } else {
         
@@ -113,6 +116,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
 
         // Set user ID and track successful account creation
         setUserId(result.user.uid);
+        setUserProperties({'account type': 1});
         trackCreatedAccount('email');
       }
       
