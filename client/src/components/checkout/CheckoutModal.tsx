@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { ShippingAddress } from '../../types';
-import { trackSubmittedOrder, trackCompletedOrder } from '../../lib/amplitude';
+import { trackSubmittedOrder, trackCompletedOrder, getExperiment } from '../../lib/amplitude';
 import { Product } from '../../types';
 import productsData from '../../data/products.json';
 import { useCartStore } from '../../stores/cartStore';
@@ -30,6 +30,79 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const [loading, setLoading] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card');
+  const [selectedShippingOption, setSelectedShippingOption] = useState<string>('');
+  const [isShippingModalOpen, setIsShippingModalOpen] = useState(false);
+  
+  // Dummy shipping data options
+  const shippingOptions = [
+    {
+      id: 'home',
+      label: 'Home Address',
+      data: {
+        firstName: 'Homer',
+        lastName: 'Simpson',
+        email: user?.email || 'homer@springfield.com',
+        address: '742 Evergreen Terrace',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62701'
+      }
+    },
+    {
+      id: 'work',
+      label: 'Work Address',
+      data: {
+        firstName: 'Homer',
+        lastName: 'Simpson',
+        email: user?.email || 'homer@powerplant.com',
+        address: '100 Industrial Way',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62702'
+      }
+    },
+    {
+      id: 'moes',
+      label: "Moe's Tavern",
+      data: {
+        firstName: 'Homer',
+        lastName: 'Simpson',
+        email: user?.email || 'homer@moestavern.com',
+        address: '57 Walnut Street',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62703'
+      }
+    },
+    {
+      id: 'kwikemart',
+      label: "Kwik-E-Mart",
+      data: {
+        firstName: 'Homer',
+        lastName: 'Simpson',
+        email: user?.email || 'homer@kwikemart.com',
+        address: '1234 Shelbyville Avenue',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62704'
+      }
+    },
+    {
+      id: 'school',
+      label: 'Springfield Elementary',
+      data: {
+        firstName: 'Homer',
+        lastName: 'Simpson',
+        email: user?.email || 'homer@elementary.edu',
+        address: '19 Plympton Street',
+        city: 'Springfield',
+        state: 'IL',
+        zipCode: '62705'
+      }
+    }
+  ];
+  
+  const [orderedShippingOptions, setOrderedShippingOptions] = useState(shippingOptions);
   
   // Shipping form state
   const [shippingData, setShippingData] = useState<ShippingAddress>({
@@ -83,6 +156,48 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const handleShippingChange = (field: keyof ShippingAddress, value: string) => {
     setShippingData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleShippingOptionChange = (optionId: string) => {
+    setSelectedShippingOption(optionId);
+    
+    if (optionId === '') {
+      // Clear form for manual input
+      setShippingData({
+        firstName: '',
+        lastName: '',
+        email: user?.email || '',
+        address: '',
+        city: '',
+        state: '',
+        zipCode: ''
+      });
+    } else {
+      // Populate form with selected option data
+      const selectedOption = orderedShippingOptions.find(option => option.id === optionId);
+      if (selectedOption) {
+        setShippingData(selectedOption.data);
+      }
+    }
+  };
+
+  const handleModalShippingSelection = (optionId: string) => {
+    const selectedOption = orderedShippingOptions.find(option => option.id === optionId);
+    if (selectedOption) {
+      // Move selected option to the front
+      const reorderedOptions = [
+        selectedOption,
+        ...orderedShippingOptions.filter(option => option.id !== optionId)
+      ];
+      setOrderedShippingOptions(reorderedOptions);
+      
+      // Set as selected and populate form
+      setSelectedShippingOption(optionId);
+      setShippingData(selectedOption.data);
+    }
+    
+    // Close modal
+    setIsShippingModalOpen(false);
   };
 
   const handlePaymentChange = (field: string, value: string) => {
@@ -190,6 +305,92 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     }
   };
 
+  const displayShippingSelection = () => {
+    const experiment = getExperiment();
+    const variant = experiment.variant('shipping-information-selection');
+    console.log('What is the variant: ', variant);
+    if (variant?.value === 'list-all') {
+      return ( 
+        <div className="mb-6">
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Choose a saved address or enter manually:
+          </h4>
+          <RadioGroup value={selectedShippingOption} onValueChange={handleShippingOptionChange} className="space-y-3">
+            {orderedShippingOptions.map((option) => (
+              <div key={option.id} className="flex items-start space-x-3 p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700">
+                <RadioGroupItem value={option.id} id={option.id} className="mt-1" />
+                <Label htmlFor={option.id} className="flex-1 cursor-pointer">
+                  <div className="font-medium text-gray-900 dark:text-white">
+                    {option.label}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {option.data.firstName} {option.data.lastName}<br />
+                    {option.data.address}<br />
+                    {option.data.city}, {option.data.state} {option.data.zipCode}
+                  </div>
+                </Label>
+              </div>
+            ))}
+            <div className="flex items-center space-x-3 p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700">
+              <RadioGroupItem value="" id="manual" />
+              <Label htmlFor="manual" className="cursor-pointer font-medium text-gray-900 dark:text-white">
+                Enter address manually
+              </Label>
+            </div>
+          </RadioGroup>
+        </div>
+      );
+    } else if (variant?.value === 'max-two-with-more') {
+      const maxDisplayed = 2;
+      const displayedOptions = orderedShippingOptions.slice(0, maxDisplayed);
+      const hasMore = orderedShippingOptions.length > maxDisplayed;
+      
+      return (
+        <div className="mb-6">
+          <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+            Choose a saved address or enter manually:
+          </h4>
+          <RadioGroup value={selectedShippingOption} onValueChange={handleShippingOptionChange} className="space-y-3">
+            {displayedOptions.map((option) => (
+              <div key={option.id} className="flex items-start space-x-3 p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700">
+                <RadioGroupItem value={option.id} id={option.id} className="mt-1" />
+                <Label htmlFor={option.id} className="flex-1 cursor-pointer">
+                  <div className="font-medium text-gray-900 dark:text-white">
+                    {option.label}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {option.data.firstName} {option.data.lastName}<br />
+                    {option.data.address}<br />
+                    {option.data.city}, {option.data.state} {option.data.zipCode}
+                  </div>
+                </Label>
+              </div>
+            ))}
+            {hasMore && (
+              <div className="flex justify-center">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setIsShippingModalOpen(true)}
+                  className="text-blue-600 hover:text-blue-800 border-blue-300 hover:border-blue-400"
+                >
+                  <i className="fas fa-plus mr-2" />
+                  More addresses ({orderedShippingOptions.length - maxDisplayed} more)
+                </Button>
+              </div>
+            )}
+            <div className="flex items-center space-x-3 p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700">
+              <RadioGroupItem value="" id="manual" />
+              <Label htmlFor="manual" className="cursor-pointer font-medium text-gray-900 dark:text-white">
+                Enter address manually
+              </Label>
+            </div>
+          </RadioGroup>
+        </div>
+      );
+    }
+  };
+
   const states = [
     'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA',
     'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD',
@@ -215,6 +416,8 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Shipping Information
               </h3>
+              {/* Display shipping selection */}
+              {displayShippingSelection()}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="firstName">First Name</Label>
@@ -223,6 +426,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     value={shippingData.firstName}
                     onChange={(e) => handleShippingChange('firstName', e.target.value)}
                     placeholder="Homer"
+                    className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     required
                   />
                 </div>
@@ -233,6 +437,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     value={shippingData.lastName}
                     onChange={(e) => handleShippingChange('lastName', e.target.value)}
                     placeholder="Simpson"
+                    className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     required
                   />
                 </div>
@@ -246,6 +451,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                   value={shippingData.email}
                   onChange={(e) => handleShippingChange('email', e.target.value)}
                   placeholder="homer@springfield.com"
+                  className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                   required
                 />
               </div>
@@ -257,6 +463,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                   value={shippingData.address}
                   onChange={(e) => handleShippingChange('address', e.target.value)}
                   placeholder="742 Evergreen Terrace"
+                  className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                   required
                 />
               </div>
@@ -269,6 +476,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     value={shippingData.city}
                     onChange={(e) => handleShippingChange('city', e.target.value)}
                     placeholder="Springfield"
+                    className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     required
                   />
                 </div>
@@ -292,6 +500,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     value={shippingData.zipCode}
                     onChange={(e) => handleShippingChange('zipCode', e.target.value)}
                     placeholder="12345"
+                    className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     required
                   />
                 </div>
@@ -332,6 +541,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                       value={paymentData.cardNumber}
                       onChange={(e) => handlePaymentChange('cardNumber', e.target.value)}
                       placeholder="1234 5678 9012 3456"
+                      className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                       maxLength={19}
                     />
                   </div>
@@ -344,6 +554,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         value={paymentData.expiryDate}
                         onChange={(e) => handlePaymentChange('expiryDate', e.target.value)}
                         placeholder="MM/YY"
+                        className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         maxLength={5}
                       />
                     </div>
@@ -354,6 +565,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                         value={paymentData.cvv}
                         onChange={(e) => handlePaymentChange('cvv', e.target.value)}
                         placeholder="123"
+                        className="placeholder:text-gray-400 dark:placeholder:text-gray-500"
                         maxLength={4}
                       />
                     </div>
@@ -446,6 +658,46 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           </div>
         </div>
       </DialogContent>
+
+      {/* Shipping Address Selection Modal */}
+      <Dialog open={isShippingModalOpen} onOpenChange={setIsShippingModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-gray-900 dark:text-white">
+              Select Shipping Address
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-3">
+            <RadioGroup value={selectedShippingOption} onValueChange={handleModalShippingSelection} className="space-y-3">
+              {orderedShippingOptions.map((option) => (
+                <div key={option.id} className="flex items-start space-x-3 p-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 cursor-pointer">
+                  <RadioGroupItem value={option.id} id={`modal-${option.id}`} className="mt-1" />
+                  <Label htmlFor={`modal-${option.id}`} className="flex-1 cursor-pointer">
+                    <div className="font-medium text-gray-900 dark:text-white">
+                      {option.label}
+                    </div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                      {option.data.firstName} {option.data.lastName}<br />
+                      {option.data.address}<br />
+                      {option.data.city}, {option.data.state} {option.data.zipCode}
+                    </div>
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+
+          <div className="flex justify-end space-x-3 mt-6">
+            <Button
+              variant="outline"
+              onClick={() => setIsShippingModalOpen(false)}
+            >
+              Cancel
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 }

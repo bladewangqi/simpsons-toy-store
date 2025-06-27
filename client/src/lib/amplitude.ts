@@ -1,14 +1,42 @@
 import * as amplitude from '@amplitude/unified';
+import { Experiment } from '@amplitude/experiment-js-client';
 import { Identify } from '@amplitude/analytics-browser';  // 👈 builder comes from here
 import { Product } from '../types';
 
+const fetchVariants = async() => {
+  console.log('Fetching variants');
+
+  await experiment.fetch();
+  console.log('What is the experiment: ', experiment.all());
+}
 // Initialize Amplitude
 const AMPLITUDE_API_KEY = import.meta.env.VITE_AMPLITUDE_API_KEY;
 
+const experiment = Experiment.initializeWithAmplitudeAnalytics(
+  'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+);
+
 if (AMPLITUDE_API_KEY) {
-  amplitude.initAll(AMPLITUDE_API_KEY);
+  amplitude.initAll(AMPLITUDE_API_KEY, {
+    analytics: {
+      // Analytics configuration options
+      autocapture: {
+        attribution: true,
+        pageViews: true,
+        sessions: true,
+        formInteractions: false,
+        fileDownloads: false,
+        elementInteractions: false,
+      }
+    },
+    experiment: {
+        deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+    }
+  });
+  console.log('Amplitude initialized');
+  fetchVariants();
 }
-console.log('What is the amplitude api key: ', AMPLITUDE_API_KEY)
+
 // Helper function to format product for tracking
 const formatProductForTracking = (product: Product, quantity: number = 1): any => ({
   product_id: product.id,
@@ -245,4 +273,8 @@ export const setUserProperties = (properties: Record<string, any>) => {
   amplitude.identify(identifyEvent);
 };
 
-export default amplitude; 
+export const getExperiment = () => {
+  return experiment;
+};
+
+export default amplitude;
