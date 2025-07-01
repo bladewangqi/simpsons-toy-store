@@ -5,7 +5,6 @@ import { Product } from '../types';
 
 const fetchVariants = async() => {
   console.log('Fetching variants');
-
   await experiment.fetch();
   console.log('What is the experiment: ', experiment.all());
 }

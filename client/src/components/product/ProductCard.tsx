@@ -10,6 +10,7 @@ import {
   trackFavoritedProduct,
   trackClickedSearchResult,
   trackRemovedFavorites,
+  getExperiment,
 } from '../../lib/amplitude';
 
 interface ProductCardProps {
@@ -83,6 +84,24 @@ export function ProductCard({ product, onQuickView, rank, pageSource = 'catalog'
     return stars;
   };
 
+  // This is a new experiment for the product card image to display the favourite button on the image
+  const displayFavoriteButton = () => {
+    const experiment = getExperiment();
+    const variant = experiment.variant('add-favourite-button-on-productcard-image');
+    //console.log('variant value: ', variant.value);
+    if (variant.value === 'treatment') {
+      return (
+        <button 
+          onClick={handleToggleFavorite}
+          className="w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg">
+          <i className={cn(
+            isFavorite(product.id) ? 'fas fa-heart text-red-500' : 'far fa-heart text-gray-600'
+          )} />
+        </button>
+      );
+    }
+  };
+
   return (
     <Link href={`/product/${product.id}`}>
       <div 
@@ -100,14 +119,7 @@ export function ProductCard({ product, onQuickView, rank, pageSource = 'catalog'
           {/* Quick Actions Overlay */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300">
             <div className="absolute top-4 right-4 space-y-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <button 
-                onClick={handleToggleFavorite}
-                className="w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center shadow-lg"
-              >
-                <i className={cn(
-                  isFavorite(product.id) ? 'fas fa-heart text-red-500' : 'far fa-heart text-gray-600'
-                )} />
-              </button>
+              {displayFavoriteButton()}
               {onQuickView && (
                 <button 
                   onClick={handleQuickView}
