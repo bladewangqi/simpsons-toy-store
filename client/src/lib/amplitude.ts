@@ -5,15 +5,15 @@ import { Product } from '../types';
 
 const fetchVariants = async() => {
   console.log('Fetching variants');
-  await experiment.fetch();
+  // await experiment.fetch();
   console.log('What is the experiment: ', experiment.all());
 }
 // Initialize Amplitude
 const AMPLITUDE_API_KEY = import.meta.env.VITE_AMPLITUDE_API_KEY;
 
-const experiment = Experiment.initializeWithAmplitudeAnalytics(
-  'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
-);
+// const experiment = Experiment.initializeWithAmplitudeAnalytics(
+//   'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+// );
 
 if (AMPLITUDE_API_KEY) {
   amplitude.initAll(AMPLITUDE_API_KEY, {
@@ -28,9 +28,9 @@ if (AMPLITUDE_API_KEY) {
         elementInteractions: false,
       }
     },
-    experiment: {
-        deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
-    },
+    // experiment: {
+    //     deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+    // },
     sr: {
       sampleRate: 1
   }
