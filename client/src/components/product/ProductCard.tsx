@@ -86,10 +86,11 @@ export function ProductCard({ product, onQuickView, rank, pageSource = 'catalog'
 
   // This is a new experiment for the product card image to display the favourite button on the image
   const displayFavoriteButton = () => {
-    const experiment = getExperiment();
-    const variant = experiment.variant('add-favourite-button-on-productcard-image');
-    //console.log('variant value: ', variant.value);
-    if (variant.value === 'treatment') {
+    // const experiment = getExperiment();
+    // const variant = experiment.variant('add-favourite-button-on-productcard-image');
+    //console.log('variant value: ', variant.value); 
+    // if (variant.value === 'treatment') {
+    if ('treatment'=== 'treatment') {
       return (
         <button 
           onClick={handleToggleFavorite}

@@ -306,9 +306,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   };
 
   const displayShippingSelection = () => {
-    const experiment = getExperiment();
-    const variant = undefined//experiment.variant('shipping-information-selection');
-    if (variant?.value === 'list-all') {
+    // const experiment = getExperiment();
+    // const variant = experiment.variant('shipping-information-selection');
+    // if (variant?.value === 'list-all') {
+    if ('list-all' === 'list-all') {
       return ( 
         <div className="mb-6">
           <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
