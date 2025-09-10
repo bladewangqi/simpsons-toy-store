@@ -307,7 +307,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   const displayShippingSelection = () => {
     const experiment = getExperiment();
-    const variant = experiment.variant('shipping-information-selection');
+    const variant = undefined//experiment.variant('shipping-information-selection');
     if (variant?.value === 'list-all') {
       return ( 
         <div className="mb-6">

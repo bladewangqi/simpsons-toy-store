@@ -6,7 +6,7 @@ import { Product } from '../types';
 const fetchVariants = async() => {
   console.log('Fetching variants');
   // await experiment.fetch();
-  console.log('What is the experiment: ', experiment.all());
+  // console.log('What is the experiment: ', experiment.all());
 }
 // Initialize Amplitude
 const AMPLITUDE_API_KEY = import.meta.env.VITE_AMPLITUDE_API_KEY;
@@ -36,7 +36,7 @@ if (AMPLITUDE_API_KEY) {
   }
   });
   console.log('Amplitude initialized');
-  fetchVariants();
+  // fetchVariants();
 }
 
 // Helper function to format product for tracking
@@ -276,7 +276,8 @@ export const setUserProperties = (properties: Record<string, any>) => {
 };
 
 export const getExperiment = () => {
-  return experiment;
+  // return experiment;
+  return "fake";
 };
 
 export default amplitude;
