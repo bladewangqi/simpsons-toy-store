@@ -5,15 +5,15 @@ import { Product } from '../types';
 
 const fetchVariants = async() => {
   console.log('Fetching variants');
-  // await experiment.fetch();
-  // console.log('What is the experiment: ', experiment.all());
+  await experiment.fetch();
+  console.log('What is the experiment: ', experiment.all());
 }
 // Initialize Amplitude
 const AMPLITUDE_API_KEY = import.meta.env.VITE_AMPLITUDE_API_KEY;
 
-// const experiment = Experiment.initializeWithAmplitudeAnalytics(
-//   'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
-// );
+const experiment = Experiment.initializeWithAmplitudeAnalytics(
+  'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+);
 
 if (AMPLITUDE_API_KEY) {
   amplitude.initAll(AMPLITUDE_API_KEY, {
@@ -21,22 +21,22 @@ if (AMPLITUDE_API_KEY) {
       // Analytics configuration options
       autocapture: {
         attribution: true,
-        pageViews: false,
+        pageViews: true,
         sessions: true,
-        formInteractions: false,
+        formInteractions: true,
         fileDownloads: false,
-        elementInteractions: false,
+        elementInteractions: true,
       }
     },
-    // experiment: {
-    //     deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
-    // },
+    experiment: {
+        deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
+    },
     sr: {
       sampleRate: 1
   }
   });
   console.log('Amplitude initialized');
-  // fetchVariants();
+  fetchVariants();
 }
 
 // Helper function to format product for tracking
@@ -276,8 +276,7 @@ export const setUserProperties = (properties: Record<string, any>) => {
 };
 
 export const getExperiment = () => {
-  // return experiment;
-  return "fake";
+  return experiment;
 };
 
 export default amplitude;
