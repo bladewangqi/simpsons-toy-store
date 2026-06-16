@@ -31,9 +31,9 @@ if (AMPLITUDE_API_KEY) {
     experiment: {
         deploymentKey: 'client-VjA7x5RICdbYb6gR7BILp1BTe52dN7yO'
     },
-    sr: {
-      sampleRate: 1
-  }
+    sessionReplay: {
+      sampleRate: 1,
+    },
   });
   console.log('Amplitude initialized');
   fetchVariants();
