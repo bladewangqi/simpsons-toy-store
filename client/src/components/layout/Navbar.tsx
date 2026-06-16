@@ -9,6 +9,7 @@ import { AuthModal } from '../auth/AuthModal';
 import { CartDrawer } from '../cart/CartDrawer';
 import { logOut } from '../../lib/firebase';
 import { useToast } from '@/hooks/use-toast';
+import amplitude from '@/lib/amplitude';
 
 export function Navbar() {
   const [location, setLocation] = useLocation();
@@ -37,6 +38,7 @@ export function Navbar() {
   const handleSignOut = async () => {
     try {
       await logOut();
+      amplitude.reset();
       setShowUserMenu(false); // Close the dropdown menu
       toast({
         title: "Signed out successfully",
